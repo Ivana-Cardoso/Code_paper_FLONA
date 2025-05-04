@@ -1,0 +1,100 @@
+## Bird Species Abundance
+
+We wanted to see if species abundance was different between forest types. First, we checked the assumptions of ANOVA, but the residuals were not normally distributed. So instead, we used the Kruskal-Wallis test, which does not require normality. To find out which forest types were significantly different from each other, we followed up with pairwise Wilcoxon tests and adjusted the p-values using the Benjamini-Hochberg (BH) method.
+
+## Load packages
+```{r, output = FALSE}
+library(ggplot2)
+library(ggpubr)
+```
+
+## Importing data
+```{r, output = FALSE}
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R")
+data <- read.csv("abundance_matrix.csv")
+abund <- data
+```
+
+## Preparing data
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Calculates total abundance per sample by summing species counts across columns 3 to 53
+abund["Abundance"]<-rowSums(data[3:53])
+```
+
+## Calculating ANOVA
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Performs one-way ANOVA to test for differences in total abundance among forest types
+anova <- aov(abund$Abundance ~ abund$tipos_florestais)
+```
+
+## Testing normality of ANOVA residuals
+```{r}
+#| code-overflow: wrap
+# Tests whether ANOVA residuals are normally distributed
+shapiro.test(anova$residuals)
+
+# Plots a histogram of ANOVA residuals to visually assess normality
+hist(anova$residuals)
+```
+
+Since the ANOVA residuals were not normally distributed (Shapiro-Wilk test, p < 0.05), we used the Kruskal–Wallis test instead. To compare groups in more detail, we then ran pairwise Wilcoxon tests.
+
+## Calculating Kruskal-Wallis test
+```{r}
+#| code-overflow: wrap
+# Performs the Kruskal-Wallis test to compare total abundance among forest types without assuming normality of residuals
+kruskal <- kruskal.test(abund$Abundance ~ abund$tipos_florestais)
+kruskal
+```
+The number of individuals varied significantly between forest types (Kruskal-Wallis test: χ² = 10.561, df = 2, p = 0.005).
+
+## Calculating Wilcoxon test
+```{r}
+#| code-overflow: wrap
+# Performs pairwise Wilcoxon tests to compare forest types, with p-value adjustment using the Benjamini-Hochberg method
+pair <- pairwise.wilcox.test(abund$Abundance, abund$tipos_florestais, p.adjust.method = "BH")
+pair
+```
+
+## Plotting the graph
+```{r}
+#| code-overflow: wrap
+
+# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)
+cor <- rep(c("#912DBF","#2DBF91","#BF912D"), each = 6)
+
+plot2 <- 
+  ggplot(data = abund,
+         aes(x =tipos_florestais, y = Abundance)) + 
+  
+  geom_boxplot(outlier.shape = NA,
+               width = 0.7, col = "black", fill = c("#2DBF91", "#912DBF", "#BF912D"), alpha = 0.30, show.legend = FALSE) +
+  
+  geom_jitter(shape= 21, 
+              width = 0.2, height = 0.2, colour = "black", fill =cor, size = 2.5)+
+
+  scale_x_discrete(labels = c("Natural\nforest", "Araucaria\nplantation", "Pine\nplantation"))+
+  
+  labs(x = " ", y = "Number of individuals", colour="black", 
+       tag = "b") +
+  
+  theme_pubr (base_size = 10) + 
+  
+  theme(axis.line = element_line(linewidth = 1/3)) +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+                 
+```
+
+## Saving the graph
+```{r}
+plot2
+ggsave(
+  plot = plot2,
+  filename = "abundance.png", dpi = 500,
+  width = 7, height = 7, units = 'cm')
+```
+
+Species were more abundant in natural forests than in both araucaria and pine plantations (p = 0.023 for both comparisons). Araucaria plantations also had more species than pine plantations (p = 0.041), with 342 individuals recorded in araucaria and 245 in pine.

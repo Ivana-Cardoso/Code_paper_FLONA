@@ -1,0 +1,113 @@
+## Bird Species Composition
+
+We assessed how similar the species composition of tree plantations was to that of natural forests using a measure called community integrity. This measure compares both the number of individuals and the types of species found in tree plantations to those in natural forests, which serve as a reference.
+
+To find out whether the different forest types were significantly different from each other, we ran an ANOVA test. When the ANOVA showed a significant result, we used Tukey's post hoc test to see which specific types differed.
+
+## Load packages
+```{r, output = FALSE}
+library(ggplot2)
+library(ggpubr)
+library(vegan)
+```
+
+## Importing data
+```{r, output = FALSE}
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R")
+data <- read.csv("abundance_matrix.csv")
+```
+
+## Preparing data
+```{r, output = FALSE}
+# Normalises the data by dividing each value by the sum of its row, converting counts to relative abundances
+rel.abund <- data[3:53]
+rel.abund <- rel.abund/rowSums(rel.abund)
+```
+
+## Calculating Community Integrity
+```{r}
+#| code-overflow: wrap
+# Defines the row indices for control sites representing natural forest
+control.rows <- c(7:12)
+
+# Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)
+bray.cf <- as.matrix(vegdist(rel.abund, method = "bray"))[control.rows, control.rows]
+
+# Calculates the community integrity for control sites as the average similarity (1 minus mean Bray–Curtis distance)
+int.cf <- mean(1 - colMeans(bray.cf))
+
+# Calculate the Bray-Curtis index between all sites (control and treatment)
+bray.all <- as.matrix(vegdist(rel.abund, method = "bray"))[control.rows, ]
+
+# Calculate the community integrity index for all sites
+# Scaled by the average similarity of the control sites and expressed as a percentage
+int.all <- ((1 - colMeans(bray.all)) / int.cf) * 100
+
+# Display the community integrity index for all sites
+int.all
+```
+
+## Calculating ANOVA
+```{r}
+#| code-overflow: wrap
+# Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals
+anova <- aov(int.all~ data$tipos_florestais)
+summary(anova)
+
+shapiro.test(anova$residuals)
+
+```
+The residuals of the ANOVA model are normally distributed (p > 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.
+
+```{r}
+# Performs Tukey's HSD test to compare pairwise differences between forest types
+TukeyHSD(anova)
+```
+
+## Plotting the graph
+```{r, output = FALSE}
+#| code-overflow: wrap
+
+tab <- data.frame(tipos_florestais = data$tipos_florestais,
+                 integrity = int.all)
+
+# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)
+cor <- rep(c("#912DBF","#2DBF91","#BF912D"), each = 6)
+
+plot3 <- 
+  ggplot(data = tab, 
+         aes(x = tipos_florestais, y = integrity)) +
+  
+  geom_boxplot(outlier.shape = NA,
+               width = 0.7, col = "black", fill = c("#2DBF91", "#912DBF", "#BF912D"), alpha =0.3, show.legend = FALSE) +
+  
+  geom_jitter(shape= 21, 
+              width = 0.25, height = 0.3, colour = "black", fill =cor, size = 2.5) +
+  
+  scale_y_continuous(limits = c(40, 103.93656),
+                     breaks = c(40,60,80,100)) +
+  
+  scale_x_discrete(labels = c("Natural\nforest", "Araucaria\nplantation", "Pine\nplantation"))+
+  
+  
+  labs(x = " ", y = "Community integrity (%)", colour="black", 
+       tag = "c") +
+  theme_pubr(base_size = 10) + 
+  
+  theme(axis.line = element_line(linewidth = 1/3))+
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+  
+```
+
+## Saving the graph
+```{r, output = FALSE}
+plot3
+
+ggsave(
+  plot = plot3,
+  filename = "community_integrity.png", dpi = 500,
+  width = 7, height = 7, units = 'cm')
+```
+
+The results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p < 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. The araucaria plantation had similar bird species to the natural forest, with a small difference in community integrity (-14.14, p-adj = 0.036). On the other hand, the pine plantation had a much more different bird community from the natural forest, with a larger difference in integrity (-37.15, p-adj < 0.001). Finally, there was also a significant difference in community integrity between the two plantation types, with the araucaria plantation showing higher values than the pine plantation (diff = -23.00, p-adj = 0.001).

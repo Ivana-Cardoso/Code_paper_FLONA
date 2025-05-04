@@ -1,0 +1,99 @@
+## Bird Species Richness
+
+We compared how species richness changes across forest types creating one rarefaction curve for each type. These curves were based on 1,000 bootstrap replications and standardised by the number of individuals recorded. We considered differences in species richness to be significant when the 95% confidence intervals of the curves did not overlap.
+
+## Load packages
+```{r, output = FALSE}
+library(ggplot2)
+library(iNEXT)
+library(ggpubr)
+```
+
+## Importing data
+```{r, output = FALSE}
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R")
+data <- read.csv("abundance_matrix.csv")
+species <- data[3:53]
+```
+
+## Preparing data
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Groups the rows of the species matrix by habitat and sums the species values within each habitat group
+raref = aggregate(species, by = list(habitat = data[1:18,1]), FUN = sum)
+
+# Set the row names of the 'raref' table using the values from the 'habitat' column (created in the previous step)
+rownames(raref) = raref$habitat
+
+# Remove the first column (habitat), keeping only the species count columns
+raref = raref[-1]
+
+# Transpose the data frame: now each row represents a species and each column represents a habitat
+raref = as.data.frame(t(raref)) 
+
+# Calculates the sum of each column — that is, the total number of individuals per habitat, summing across all species
+colSums(raref)
+```
+
+## Creating rarefaction curves
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data
+raref <- iNEXT(raref, q= 0, datatype ="abundance", endpoint = NULL, conf = 0.95, nboot = 1000)
+```
+
+## Plotting the graph
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Extracts the size-based estimation data from the iNEXT results.
+y = raref$iNextEst$size_based
+
+# Removes extrapolated estimates for habitats other than "natural_forest"
+z = y[-which(y$Assemblage != "natural_forest" &
+               y$Method == "Extrapolation"), ]
+
+# Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data
+z$Assemblage = factor(z$Assemblage,
+                      levels = unique(z$Assemblage))
+
+
+plot1 <- 
+  ggplot(data = z, aes(x = m, y = qD, colour = Assemblage, fill = Assemblage)) +
+  
+   labs(y = "Number of species",
+        x = "Number of individuals", colour = NULL, fill = NULL,
+        tag = "a") +
+  
+  
+    scale_color_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
+                     labels = c("Natural forest", "Araucaria plantation", "Pine plantation")) +
+  
+    scale_fill_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
+                    labels = c("Natural forest","Araucaria plantation","Pine plantation")) +
+  
+    geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),
+              colour = NA, alpha = 0.30, show.legend = FALSE) +
+  
+    geom_line(size = 1) +
+  
+  theme_pubr(base_size = 10) + 
+  
+  theme(legend.position = c(0.95, 0.05),
+        legend.justification = c(0.95, 0.05), 
+        axis.line = element_line(linewidth = 1/3)) +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+
+```
+
+## Saving the graph
+```{r}
+#| code-overflow: wrap
+plot1
+ggsave(
+  plot = plot1,
+  filename = "richness.png", dpi = 500,
+  width = 7, height = 7, units = 'cm')
+```
+
+When we standardised the sampling effort to 245 individuals (the smallest sample size), the rarefied species richness was similar across the three forest types. This is because the 95% confidence intervals of the richness estimates overlapped.

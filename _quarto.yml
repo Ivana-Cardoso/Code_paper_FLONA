@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna"
+  author: 
+  - name: Rayssa T. Amarante
+    orcid: 0009-0002-4837-6202
+  - name: Ivana Cardoso
+    orcid: 0000-0003-2662-6426
+    email: ivanawaters@gmail.com
+  - name: Raquel T. Amarante
+    orcid: 0009-0008-9153-7650
+  - name: Felipe Brum
+    orcid: 0009-0005-8961-3878
+  - name: Anderson S. Bueno
+    orcid: 0000-0001-7416-6626
+  date: "04/05/2025"
+  chapters:
+    - index.qmd
+    - species_richness.qmd
+    - species_abundance.qmd
+    - species_composition.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

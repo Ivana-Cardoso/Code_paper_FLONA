@@ -1,0 +1,222 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna",
+    "section": "",
+    "text": "Introduction\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "References"
+    ]
+  },
+  {
+    "objectID": "species_richness.html",
+    "href": "species_richness.html",
+    "title": "1  Bird Species Richness",
+    "section": "",
+    "text": "To compare species richness patterns among different forest types, we used three rarefaction curves, one for each forest type, based on 1,000 bootstrap replications, standardised by the number of captured individuals. Differences in species richness were considered significant when there was no overlap in the 95% confidence intervals of the rarefaction curves.\n\nLoad packages\n\nlibrary(ggplot2)\nlibrary(iNEXT)\nlibrary(ggpubr)\n\n\n\nImporting data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nspecies &lt;- data[3:53]\n\n\n\nPreparing data\n\n# Groups the rows of the species matrix by habitat and sums the species values within each habitat group\nraref = aggregate(species, by = list(habitat = data[1:18,1]), FUN = sum)\n\n# Set the row names of the 'raref' table using the values from the 'habitat' column (created in the previous step)\nrownames(raref) = raref$habitat\n\n# Remove the first column (habitat), keeping only the species count columns\nraref = raref[-1]\n\n# Transpose the data frame: now each row represents a species and each column represents a habitat\nraref = as.data.frame(t(raref)) \n\n# Calculates the sum of each column — that is, the total number of individuals per habitat, summing across all species\ncolSums(raref)\n\n\n\nCreating rarefaction curves\n\n# Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data\nraref &lt;- iNEXT(raref, q= 0, datatype =\"abundance\", endpoint = NULL, conf = 0.95, nboot = 1000)\n\n\n\nPlotting the graph\n\n# Extracts the size-based estimation data from the iNEXT results.\ny = raref$iNextEst$size_based\n\n# Removes extrapolated estimates for habitats other than \"natural_forest\"\nz = y[-which(y$Assemblage != \"natural_forest\" &\n               y$Method == \"Extrapolation\"), ]\n\n# Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data\nz$Assemblage = factor(z$Assemblage,\n                      levels = unique(z$Assemblage))\n\n\nplot1 &lt;- \n  ggplot(data = z, aes(x = m, y = qD, colour = Assemblage, fill = Assemblage)) +\n  \n   labs(y = \"Number of species\",\n        x = \"Number of individuals\", colour = NULL, fill = NULL,\n        tag = \"a\") +\n  \n  \n    scale_color_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                     labels = c(\"Natural forest\", \"Araucaria plantation\", \"Pine plantation\")) +\n  \n    scale_fill_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                    labels = c(\"Natural forest\",\"Araucaria plantation\",\"Pine plantation\")) +\n  \n    geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),\n              colour = NA, alpha = 0.30, show.legend = FALSE) +\n  \n    geom_line(size = 1) +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = c(0.95, 0.05),\n        legend.justification = c(0.95, 0.05), \n        axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\nSaving plot\n\nplot1\n\n\n\n\n\n\n\nggsave(\n  plot = plot1,\n  filename = \"richness.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html",
+    "href": "species_abundance.html",
+    "title": "2  Bird Species Abundance",
+    "section": "",
+    "text": "2.1 Load packages\nlibrary(ggplot2)\nlibrary(ggpubr)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html",
+    "href": "species_composition.html",
+    "title": "3  Bird Species Composition",
+    "section": "",
+    "text": "3.1 Load packages\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(vegan)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#importing-data",
+    "href": "species_composition.html#importing-data",
+    "title": "3  Bird Species Composition",
+    "section": "3.2 Importing data",
+    "text": "3.2 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#preparing-data",
+    "href": "species_composition.html#preparing-data",
+    "title": "3  Bird Species Composition",
+    "section": "3.3 Preparing data",
+    "text": "3.3 Preparing data\n\n# Normalises the data by dividing each value by the sum of its row, converting counts to relative abundances\nrel.abund &lt;- data[3:53]\nrel.abund &lt;- rel.abund/rowSums(rel.abund)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#calculating-community-integrity",
+    "href": "species_composition.html#calculating-community-integrity",
+    "title": "3  Bird Species Composition",
+    "section": "3.4 Calculating Community Integrity",
+    "text": "3.4 Calculating Community Integrity\n\n# Defines the row indices for control sites representing natural forest\ncontrol.rows &lt;- c(7:12)\n\n# Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)\nbray.cf &lt;- as.matrix(vegdist(rel.abund, method = \"bray\"))[control.rows, control.rows]\n\n# Calculates the community integrity for control sites as the average similarity (1 minus mean Bray–Curtis distance)\nint.cf &lt;- mean(1 - colMeans(bray.cf))\n\n# Calculate the Bray-Curtis index between all sites (control and treatment)\nbray.all &lt;- as.matrix(vegdist(rel.abund, method = \"bray\"))[control.rows, ]\n\n# Calculate the community integrity index for all sites\n# Scaled by the average similarity of the control sites and expressed as a percentage\nint.all &lt;- ((1 - colMeans(bray.all)) / int.cf) * 100\n\n# Display the community integrity index for all sites\nint.all\n\n        1         2         3         4         5         6         7         8 \n 91.83015  76.08282  84.77477  75.14153  98.01282  89.30392 101.61364  94.01150 \n        9        10        11        12        13        14        15        16 \n103.93656 103.00584  98.10394  99.32853  75.94806  53.72609  55.53405  54.43151 \n       17        18 \n 79.95784  57.49437",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#calculating-anova",
+    "href": "species_composition.html#calculating-anova",
+    "title": "3  Bird Species Composition",
+    "section": "3.5 Calculating ANOVA",
+    "text": "3.5 Calculating ANOVA\n\n# Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals\nanova &lt;- aov(int.all~ data$tipos_florestais)\nsummary(anova)\n\n                      Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ndata$tipos_florestais  2   4219  2109.6   26.94 1.08e-05 ***\nResiduals             15   1174    78.3                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nshapiro.test(anova$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.93721, p-value = 0.2594\n\n\nThe residuals of the ANOVA model are normally distributed (p &gt; 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.\n\n# Performs Tukey's HSD test to compare pairwise differences between forest types\nTukeyHSD(anova)\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = int.all ~ data$tipos_florestais)\n\n$`data$tipos_florestais`\n                                               diff       lwr         upr\nPlantacao_de_araucaria-Floresta_natural   -14.14233 -27.41207  -0.8725946\nPlantacao_de_pinus-Floresta_natural       -37.15135 -50.42109 -23.8816100\nPlantacao_de_pinus-Plantacao_de_araucaria -23.00902 -36.27875  -9.7392777\n                                              p adj\nPlantacao_de_araucaria-Floresta_natural   0.0360896\nPlantacao_de_pinus-Floresta_natural       0.0000077\nPlantacao_de_pinus-Plantacao_de_araucaria 0.0011497",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#plotting-the-graph",
+    "href": "species_composition.html#plotting-the-graph",
+    "title": "3  Bird Species Composition",
+    "section": "3.6 Plotting the graph",
+    "text": "3.6 Plotting the graph\n\ntab &lt;- data.frame(tipos_florestais = data$tipos_florestais,\n                 integrity = int.all)\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncor &lt;- rep(c(\"#912DBF\",\"#2DBF91\",\"#BF912D\"), each = 6)\n\nplot3 &lt;- \n  ggplot(data = tab, \n         aes(x = tipos_florestais, y = integrity)) +\n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), alpha =0.3, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.25, height = 0.3, colour = \"black\", fill =cor, size = 2.5) +\n  \n  scale_y_continuous(limits = c(40, 103.93656),\n                     breaks = c(40,60,80,100)) +\n  \n  scale_x_discrete(labels = c(\"Natural\\nforest\", \"Araucaria\\nplantation\", \"Pine\\nplantation\"))+\n  \n  \n  labs(x = \" \", y = \"Community integrity (%)\", colour=\"black\", \n       tag = \"c\") +\n  theme_pubr(base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3))+\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#saving-the-graph",
+    "href": "species_composition.html#saving-the-graph",
+    "title": "3  Bird Species Composition",
+    "section": "3.7 Saving the graph",
+    "text": "3.7 Saving the graph\n\nplot3\nggsave(\n  plot = plot3,\n  filename = \"community_integrity.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')\n\nThe results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p &lt; 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. The araucaria plantation had similar bird species to the natural forest, with a small difference in community integrity (-14.14, p-adj = 0.036). On the other hand, the pine plantation had a much more different bird community from the natural forest, with a larger difference in integrity (-37.15, p-adj &lt; 0.001). Finally, there was also a significant difference in community integrity between the two plantation types, with the araucaria plantation showing higher values than the pine plantation (diff = -23.00, p-adj = 0.001).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#importing-data",
+    "href": "species_abundance.html#importing-data",
+    "title": "2  Bird Species Abundance",
+    "section": "2.2 Importing data",
+    "text": "2.2 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nabund &lt;- data",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#preparing-data",
+    "href": "species_abundance.html#preparing-data",
+    "title": "2  Bird Species Abundance",
+    "section": "2.3 Preparing data",
+    "text": "2.3 Preparing data\n\n# Calculates total abundance per sample by summing species counts across columns 3 to 53\nabund[\"Abundance\"]&lt;-rowSums(data[3:53])",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#calculating-anova",
+    "href": "species_abundance.html#calculating-anova",
+    "title": "2  Bird Species Abundance",
+    "section": "2.4 Calculating ANOVA",
+    "text": "2.4 Calculating ANOVA\n\n# Performs one-way ANOVA to test for differences in total abundance among forest types\nanova &lt;- aov(abund$Abundance ~ abund$tipos_florestais)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#testing-normality-of-anova-residuals",
+    "href": "species_abundance.html#testing-normality-of-anova-residuals",
+    "title": "2  Bird Species Abundance",
+    "section": "2.5 Testing normality of ANOVA residuals",
+    "text": "2.5 Testing normality of ANOVA residuals\n\n# Tests whether ANOVA residuals are normally distributed\nshapiro.test(anova$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.88687, p-value = 0.03412\n\n# Plots a histogram of ANOVA residuals to visually assess normality\nhist(anova$residuals)\n\n\n\n\n\n\n\n\nSince the ANOVA residuals were not normally distributed (Shapiro-Wilk test, p &lt; 0.05), we used the Kruskal–Wallis test instead. To compare groups in more detail, we then ran pairwise Wilcoxon tests.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#calculating-kruskal-wallis-test",
+    "href": "species_abundance.html#calculating-kruskal-wallis-test",
+    "title": "2  Bird Species Abundance",
+    "section": "2.6 Calculating Kruskal-Wallis test",
+    "text": "2.6 Calculating Kruskal-Wallis test\n\n# Performs the Kruskal-Wallis test to compare total abundance among forest types without assuming normality of residuals\nkruskal &lt;- kruskal.test(abund$Abundance ~ abund$tipos_florestais)\nkruskal\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  abund$Abundance by abund$tipos_florestais\nKruskal-Wallis chi-squared = 10.561, df = 2, p-value = 0.005089\n\n\nThe number of individuals varied significantly between forest types (Kruskal-Wallis test: χ² = 10.561, df = 2, p = 0.005).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#calculating-wilcoxon-test",
+    "href": "species_abundance.html#calculating-wilcoxon-test",
+    "title": "2  Bird Species Abundance",
+    "section": "2.7 Calculating Wilcoxon test",
+    "text": "2.7 Calculating Wilcoxon test\n\n# Performs pairwise Wilcoxon tests to compare forest types, with p-value adjustment using the Benjamini-Hochberg method\npair &lt;- pairwise.wilcox.test(abund$Abundance, abund$tipos_florestais, p.adjust.method = \"BH\")\npair\n\n\n    Pairwise comparisons using Wilcoxon rank sum exact test \n\ndata:  abund$Abundance and abund$tipos_florestais \n\n                       Floresta_natural Plantacao_de_araucaria\nPlantacao_de_araucaria 0.023            -                     \nPlantacao_de_pinus     0.023            0.041                 \n\nP value adjustment method: BH",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#plotting-the-graph",
+    "href": "species_abundance.html#plotting-the-graph",
+    "title": "2  Bird Species Abundance",
+    "section": "2.8 Plotting the graph",
+    "text": "2.8 Plotting the graph\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncor &lt;- rep(c(\"#912DBF\",\"#2DBF91\",\"#BF912D\"), each = 6)\n\nplot2 &lt;- \n  ggplot(data = abund,\n         aes(x =tipos_florestais, y = Abundance)) + \n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.2, height = 0.2, colour = \"black\", fill =cor, size = 2.5)+\n\n  scale_x_discrete(labels = c(\"Natural\\nforest\", \"Araucaria\\nplantation\", \"Pine\\nplantation\"))+\n  \n  labs(x = \" \", y = \"Number of individuals\", colour=\"black\", \n       tag = \"b\") +\n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#saving-plot",
+    "href": "species_abundance.html#saving-plot",
+    "title": "2  Bird Species Abundance",
+    "section": "2.9 Saving plot",
+    "text": "2.9 Saving plot\n\nplot2\n\n\n\n\n\n\n\nggsave(\n  plot = plot2,\n  filename = \"abundance.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#saving-the-graph",
+    "href": "species_abundance.html#saving-the-graph",
+    "title": "2  Bird Species Abundance",
+    "section": "2.9 Saving the graph",
+    "text": "2.9 Saving the graph\n\nplot2\n\n\n\n\n\n\n\nggsave(\n  plot = plot2,\n  filename = \"abundance.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')\n\nSpecies were more abundant in natural forests than in both araucaria and pine plantations (p = 0.023 for both comparisons). Araucaria plantations also had more species than pine plantations (p = 0.041), with 342 individuals recorded in araucaria and 245 in pine.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  }
+]
