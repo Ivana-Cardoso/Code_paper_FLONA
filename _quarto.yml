@@ -15,13 +15,14 @@ book:
     orcid: 0009-0005-8961-3878
   - name: Anderson S. Bueno
     orcid: 0000-0001-7416-6626
-  date: "04/05/2025"
+  date: "06/03/2025"
   chapters:
     - index.qmd
+    - characteristics_tree_plantations.qmd
+    - indicator_species.qmd
     - species_richness.qmd
     - species_abundance.qmd
     - species_composition.qmd
-    - references.qmd
 
 bibliography: references.bib
 

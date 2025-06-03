@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna",
     "section": "",
-    "text": "Introduction\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "1 Introduction\nThis document covers the analyses used in the paper Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna, published in the journal Forest Ecology and Management.\nThe objectives of this study were:\nThis document is organised into sections, which you can navigate using the links on the left sidebar.",
     "crumbs": [
-      "Introduction"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
@@ -42,31 +42,31 @@
   {
     "objectID": "species_richness.html",
     "href": "species_richness.html",
-    "title": "1  Bird Species Richness",
+    "title": "4  Bird Species Richness",
     "section": "",
-    "text": "To compare species richness patterns among different forest types, we used three rarefaction curves, one for each forest type, based on 1,000 bootstrap replications, standardised by the number of captured individuals. Differences in species richness were considered significant when there was no overlap in the 95% confidence intervals of the rarefaction curves.\n\nLoad packages\n\nlibrary(ggplot2)\nlibrary(iNEXT)\nlibrary(ggpubr)\n\n\n\nImporting data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nspecies &lt;- data[3:53]\n\n\n\nPreparing data\n\n# Groups the rows of the species matrix by habitat and sums the species values within each habitat group\nraref = aggregate(species, by = list(habitat = data[1:18,1]), FUN = sum)\n\n# Set the row names of the 'raref' table using the values from the 'habitat' column (created in the previous step)\nrownames(raref) = raref$habitat\n\n# Remove the first column (habitat), keeping only the species count columns\nraref = raref[-1]\n\n# Transpose the data frame: now each row represents a species and each column represents a habitat\nraref = as.data.frame(t(raref)) \n\n# Calculates the sum of each column — that is, the total number of individuals per habitat, summing across all species\ncolSums(raref)\n\n\n\nCreating rarefaction curves\n\n# Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data\nraref &lt;- iNEXT(raref, q= 0, datatype =\"abundance\", endpoint = NULL, conf = 0.95, nboot = 1000)\n\n\n\nPlotting the graph\n\n# Extracts the size-based estimation data from the iNEXT results.\ny = raref$iNextEst$size_based\n\n# Removes extrapolated estimates for habitats other than \"natural_forest\"\nz = y[-which(y$Assemblage != \"natural_forest\" &\n               y$Method == \"Extrapolation\"), ]\n\n# Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data\nz$Assemblage = factor(z$Assemblage,\n                      levels = unique(z$Assemblage))\n\n\nplot1 &lt;- \n  ggplot(data = z, aes(x = m, y = qD, colour = Assemblage, fill = Assemblage)) +\n  \n   labs(y = \"Number of species\",\n        x = \"Number of individuals\", colour = NULL, fill = NULL,\n        tag = \"a\") +\n  \n  \n    scale_color_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                     labels = c(\"Natural forest\", \"Araucaria plantation\", \"Pine plantation\")) +\n  \n    scale_fill_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                    labels = c(\"Natural forest\",\"Araucaria plantation\",\"Pine plantation\")) +\n  \n    geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),\n              colour = NA, alpha = 0.30, show.legend = FALSE) +\n  \n    geom_line(size = 1) +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = c(0.95, 0.05),\n        legend.justification = c(0.95, 0.05), \n        axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\nSaving plot\n\nplot1\n\n\n\n\n\n\n\nggsave(\n  plot = plot1,\n  filename = \"richness.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "text": "Ensuring reproducibility\nset.seed(26)",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bird Species Richness</span>"
     ]
   },
   {
     "objectID": "species_abundance.html",
     "href": "species_abundance.html",
-    "title": "2  Bird Species Abundance",
+    "title": "5  Bird Species Abundance",
     "section": "",
-    "text": "2.1 Load packages\nlibrary(ggplot2)\nlibrary(ggpubr)",
+    "text": "Ensuring Reproducibility\nset.seed(26)",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
   },
   {
     "objectID": "species_composition.html",
     "href": "species_composition.html",
-    "title": "3  Bird Species Composition",
+    "title": "6  Bird Community Integrity",
     "section": "",
-    "text": "3.1 Load packages\nlibrary(ggplot2)\nlibrary(ggpubr)\nlibrary(vegan)",
+    "text": "Ensuring Reproducibility\nset.seed(26)",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Bird Species Composition</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bird Community Integrity</span>"
     ]
   },
   {
@@ -133,8 +133,8 @@
     "objectID": "species_abundance.html#importing-data",
     "href": "species_abundance.html#importing-data",
     "title": "2  Bird Species Abundance",
-    "section": "2.2 Importing data",
-    "text": "2.2 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nabund &lt;- data",
+    "section": "3.2 Importing data",
+    "text": "3.2 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nabund &lt;- data",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -143,8 +143,8 @@
     "objectID": "species_abundance.html#preparing-data",
     "href": "species_abundance.html#preparing-data",
     "title": "2  Bird Species Abundance",
-    "section": "2.3 Preparing data",
-    "text": "2.3 Preparing data\n\n# Calculates total abundance per sample by summing species counts across columns 3 to 53\nabund[\"Abundance\"]&lt;-rowSums(data[3:53])",
+    "section": "3.3 Preparing data",
+    "text": "3.3 Preparing data\n\n# Calculates total abundance per sample by summing species counts across columns 3 to 53\nabund[\"Abundance\"]&lt;-rowSums(data[3:53])",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -153,8 +153,8 @@
     "objectID": "species_abundance.html#calculating-anova",
     "href": "species_abundance.html#calculating-anova",
     "title": "2  Bird Species Abundance",
-    "section": "2.4 Calculating ANOVA",
-    "text": "2.4 Calculating ANOVA\n\n# Performs one-way ANOVA to test for differences in total abundance among forest types\nanova &lt;- aov(abund$Abundance ~ abund$tipos_florestais)",
+    "section": "3.4 Calculating ANOVA",
+    "text": "3.4 Calculating ANOVA\n\n# Performs one-way ANOVA to test for differences in total abundance among forest types\nanova &lt;- aov(abund$Abundance ~ abund$tipos_florestais)",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -163,8 +163,8 @@
     "objectID": "species_abundance.html#testing-normality-of-anova-residuals",
     "href": "species_abundance.html#testing-normality-of-anova-residuals",
     "title": "2  Bird Species Abundance",
-    "section": "2.5 Testing normality of ANOVA residuals",
-    "text": "2.5 Testing normality of ANOVA residuals\n\n# Tests whether ANOVA residuals are normally distributed\nshapiro.test(anova$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.88687, p-value = 0.03412\n\n# Plots a histogram of ANOVA residuals to visually assess normality\nhist(anova$residuals)\n\n\n\n\n\n\n\n\nSince the ANOVA residuals were not normally distributed (Shapiro-Wilk test, p &lt; 0.05), we used the Kruskal–Wallis test instead. To compare groups in more detail, we then ran pairwise Wilcoxon tests.",
+    "section": "3.5 Testing normality of ANOVA residuals",
+    "text": "3.5 Testing normality of ANOVA residuals\n\n# Tests whether ANOVA residuals are normally distributed\nshapiro.test(anova$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.88687, p-value = 0.03412\n\n# Plots a histogram of ANOVA residuals to visually assess normality\nhist(anova$residuals)\n\n\n\n\n\n\n\n\nSince the ANOVA residuals were not normally distributed (Shapiro-Wilk test, p &lt; 0.05), we used the Kruskal–Wallis test instead. To compare groups in more detail, we then ran pairwise Wilcoxon tests.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -173,8 +173,8 @@
     "objectID": "species_abundance.html#calculating-kruskal-wallis-test",
     "href": "species_abundance.html#calculating-kruskal-wallis-test",
     "title": "2  Bird Species Abundance",
-    "section": "2.6 Calculating Kruskal-Wallis test",
-    "text": "2.6 Calculating Kruskal-Wallis test\n\n# Performs the Kruskal-Wallis test to compare total abundance among forest types without assuming normality of residuals\nkruskal &lt;- kruskal.test(abund$Abundance ~ abund$tipos_florestais)\nkruskal\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  abund$Abundance by abund$tipos_florestais\nKruskal-Wallis chi-squared = 10.561, df = 2, p-value = 0.005089\n\n\nThe number of individuals varied significantly between forest types (Kruskal-Wallis test: χ² = 10.561, df = 2, p = 0.005).",
+    "section": "3.6 Calculating Kruskal-Wallis test",
+    "text": "3.6 Calculating Kruskal-Wallis test\n\n# Performs the Kruskal-Wallis test to compare total abundance among forest types without assuming normality of residuals\nkruskal &lt;- kruskal.test(abund$Abundance ~ abund$tipos_florestais)\nkruskal\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  abund$Abundance by abund$tipos_florestais\nKruskal-Wallis chi-squared = 10.561, df = 2, p-value = 0.005089\n\n\nThe number of individuals varied significantly between forest types (Kruskal-Wallis test: χ² = 10.561, df = 2, p = 0.005).",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -183,8 +183,8 @@
     "objectID": "species_abundance.html#calculating-wilcoxon-test",
     "href": "species_abundance.html#calculating-wilcoxon-test",
     "title": "2  Bird Species Abundance",
-    "section": "2.7 Calculating Wilcoxon test",
-    "text": "2.7 Calculating Wilcoxon test\n\n# Performs pairwise Wilcoxon tests to compare forest types, with p-value adjustment using the Benjamini-Hochberg method\npair &lt;- pairwise.wilcox.test(abund$Abundance, abund$tipos_florestais, p.adjust.method = \"BH\")\npair\n\n\n    Pairwise comparisons using Wilcoxon rank sum exact test \n\ndata:  abund$Abundance and abund$tipos_florestais \n\n                       Floresta_natural Plantacao_de_araucaria\nPlantacao_de_araucaria 0.023            -                     \nPlantacao_de_pinus     0.023            0.041                 \n\nP value adjustment method: BH",
+    "section": "3.7 Calculating Wilcoxon test",
+    "text": "3.7 Calculating Wilcoxon test\n\n# Performs pairwise Wilcoxon tests to compare forest types, with p-value adjustment using the Benjamini-Hochberg method\npair &lt;- pairwise.wilcox.test(abund$Abundance, abund$tipos_florestais, p.adjust.method = \"BH\")\npair\n\n\n    Pairwise comparisons using Wilcoxon rank sum exact test \n\ndata:  abund$Abundance and abund$tipos_florestais \n\n                       Floresta_natural Plantacao_de_araucaria\nPlantacao_de_araucaria 0.023            -                     \nPlantacao_de_pinus     0.023            0.041                 \n\nP value adjustment method: BH",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -193,8 +193,8 @@
     "objectID": "species_abundance.html#plotting-the-graph",
     "href": "species_abundance.html#plotting-the-graph",
     "title": "2  Bird Species Abundance",
-    "section": "2.8 Plotting the graph",
-    "text": "2.8 Plotting the graph\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncor &lt;- rep(c(\"#912DBF\",\"#2DBF91\",\"#BF912D\"), each = 6)\n\nplot2 &lt;- \n  ggplot(data = abund,\n         aes(x =tipos_florestais, y = Abundance)) + \n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.2, height = 0.2, colour = \"black\", fill =cor, size = 2.5)+\n\n  scale_x_discrete(labels = c(\"Natural\\nforest\", \"Araucaria\\nplantation\", \"Pine\\nplantation\"))+\n  \n  labs(x = \" \", y = \"Number of individuals\", colour=\"black\", \n       tag = \"b\") +\n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
+    "section": "3.8 Plotting the graph",
+    "text": "3.8 Plotting the graph\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncor &lt;- rep(c(\"#912DBF\",\"#2DBF91\",\"#BF912D\"), each = 6)\n\nplot2 &lt;- \n  ggplot(data = abund,\n         aes(x =tipos_florestais, y = Abundance)) + \n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.2, height = 0.2, colour = \"black\", fill =cor, size = 2.5)+\n\n  scale_x_discrete(labels = c(\"Natural\\nforest\", \"Araucaria\\nplantation\", \"Pine\\nplantation\"))+\n  \n  labs(x = \" \", y = \"Number of individuals\", colour=\"black\", \n       tag = \"b\") +\n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
     ]
@@ -213,10 +213,330 @@
     "objectID": "species_abundance.html#saving-the-graph",
     "href": "species_abundance.html#saving-the-graph",
     "title": "2  Bird Species Abundance",
-    "section": "2.9 Saving the graph",
-    "text": "2.9 Saving the graph\n\nplot2\n\n\n\n\n\n\n\nggsave(\n  plot = plot2,\n  filename = \"abundance.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')\n\nSpecies were more abundant in natural forests than in both araucaria and pine plantations (p = 0.023 for both comparisons). Araucaria plantations also had more species than pine plantations (p = 0.041), with 342 individuals recorded in araucaria and 245 in pine.",
+    "section": "3.9 Saving the graph",
+    "text": "3.9 Saving the graph\n\nplot2\n\n\n\n\n\n\n\nggsave(\n  plot = plot2,\n  filename = \"abundance.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')\n\nSpecies were more abundant in natural forests than in both araucaria and pine plantations (p = 0.023 for both comparisons). Araucaria plantations also had more species than pine plantations (p = 0.041), with 342 individuals recorded in araucaria and 245 in pine.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#importing-data",
+    "href": "species_richness.html#importing-data",
+    "title": "1  Bird Species Richness",
+    "section": "1.3 Importing data",
+    "text": "1.3 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nspecies &lt;- data[3:53]",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#preparing-data",
+    "href": "species_richness.html#preparing-data",
+    "title": "1  Bird Species Richness",
+    "section": "1.4 Preparing data",
+    "text": "1.4 Preparing data\n\n# Groups the rows of the species matrix by habitat and sums the species values within each habitat group\nraref = aggregate(species, by = list(habitat = data[1:18,1]), FUN = sum)\n\n# Set the row names of the 'raref' table using the values from the 'habitat' column (created in the previous step)\nrownames(raref) = raref$habitat\n\n# Remove the first column (habitat), keeping only the species count columns\nraref = raref[-1]\n\n# Transpose the data frame: now each row represents a species and each column represents a habitat\nraref = as.data.frame(t(raref)) \n\n# Calculates the sum of each column — that is, the total number of individuals per habitat, summing across all species\ncolSums(raref)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#creating-rarefaction-curves",
+    "href": "species_richness.html#creating-rarefaction-curves",
+    "title": "1  Bird Species Richness",
+    "section": "1.5 Creating rarefaction curves",
+    "text": "1.5 Creating rarefaction curves\n\n# Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data\nraref &lt;- iNEXT(raref, q= 0, datatype =\"abundance\", endpoint = NULL, conf = 0.95, nboot = 10)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#plotting-the-graph",
+    "href": "species_richness.html#plotting-the-graph",
+    "title": "1  Bird Species Richness",
+    "section": "1.6 Plotting the graph",
+    "text": "1.6 Plotting the graph\n\n# Extracts the size-based estimation data from the iNEXT results.\ny = raref$iNextEst$size_based\n\n# Removes extrapolated estimates for habitats other than \"natural_forest\"\nz = y[-which(y$Assemblage != \"natural_forest\" &\n               y$Method == \"Extrapolation\"), ]\n\n# Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data\nz$Assemblage = factor(z$Assemblage,\n                      levels = unique(z$Assemblage))\n\n\nplot1 &lt;- \n  ggplot(data = z, aes(x = m, y = qD, colour = Assemblage, fill = Assemblage)) +\n  \n   labs(y = \"Number of species\",\n        x = \"Number of individuals\", colour = NULL, fill = NULL,\n        tag = \"a\") +\n  \n  \n    scale_color_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                     labels = c(\"Natural forest\", \"Araucaria plantation\", \"Pine plantation\")) +\n  \n    scale_fill_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                    labels = c(\"Natural forest\",\"Araucaria plantation\",\"Pine plantation\")) +\n  \n    geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),\n              colour = NA, alpha = 0.30, show.legend = FALSE) +\n  \n    geom_line(size = 1) +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = c(0.95, 0.05),\n        legend.justification = c(0.95, 0.05), \n        axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#saving-the-graph",
+    "href": "species_richness.html#saving-the-graph",
+    "title": "1  Bird Species Richness",
+    "section": "1.7 Saving the graph",
+    "text": "1.7 Saving the graph\n\nplot1\n\n\n\n\n\n\n\nggsave(\n  plot = plot1,\n  filename = \"richness.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')\n\nWhen we standardised the sampling effort to 245 individuals (the smallest sample size), the rarefied species richness was similar across the three forest types. This is because the 95% confidence intervals of the richness estimates overlapped.\n\nUnderstorey vegetation obstruction\nTo investigate the effect of understorey vegetation obstruction on species richness we performed simple regression analyses.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#load-packages",
+    "href": "species_richness.html#load-packages",
+    "title": "1  Bird Species Richness",
+    "section": "1.1 Load packages",
+    "text": "1.1 Load packages\n\nlibrary(ggplot2)\nlibrary(iNEXT)\nlibrary(ggpubr)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#predictor-variable-understorey-vegetation-obstruction",
+    "href": "species_richness.html#predictor-variable-understorey-vegetation-obstruction",
+    "title": "1  Bird Species Richness",
+    "section": "Predictor variable: Understorey vegetation obstruction",
+    "text": "Predictor variable: Understorey vegetation obstruction\nTo investigate the effect of understorey vegetation obstruction on species richness, abundance and composition, we performed simple regression analyses for each response variable: number of species, number of individuals, and community integrity.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#ensuring-reproducibility",
+    "href": "species_richness.html#ensuring-reproducibility",
+    "title": "1  Bird Species Richness",
+    "section": "1.2 Ensuring Reproducibility",
+    "text": "1.2 Ensuring Reproducibility\n\nset.seed(26)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#load-packages-1",
+    "href": "species_richness.html#load-packages-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.8 Load packages",
+    "text": "1.8 Load packages\n\nlibrary(ggplot2)\nlibrary(ggpubr)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#ensuring-reproducibility-1",
+    "href": "species_richness.html#ensuring-reproducibility-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.9 Ensuring Reproducibility",
+    "text": "1.9 Ensuring Reproducibility\n\nset.seed(26)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#importing-data-1",
+    "href": "species_richness.html#importing-data-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.10 Importing data",
+    "text": "1.10 Importing data\n\nsetwd(\"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R\")\ndata &lt;- read.csv(\"abundance_matrix.csv\")\nsites &lt;-  read.csv (\"variaveis_int.all.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#preparing-data-1",
+    "href": "species_richness.html#preparing-data-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.11 Preparing data",
+    "text": "1.11 Preparing data\n\nspecies &lt;- data\nspecies[\"Richness\"]&lt;-rowSums(species[3:53]&gt;0)\n\nset &lt;- data.frame(tipos_florestais = sites$tipo_florestal,\n                  Richness = species$Richness,\n                  obstruction = sites$obstrucao_da_vegetacao)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#fitting-the-regression-model",
+    "href": "species_richness.html#fitting-the-regression-model",
+    "title": "1  Bird Species Richness",
+    "section": "1.12 Fitting the regression model",
+    "text": "1.12 Fitting the regression model\n\nreg_rich &lt;- lm(set$Richness ~ set$obstruction)\nsummary(reg_rich)\n\n\nCall:\nlm(formula = set$Richness ~ set$obstruction)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.0453 -2.1640 -0.1846  2.6255  5.0749 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept)     14.67834    4.47391   3.281  0.00471 **\nset$obstruction  0.06013    0.09024   0.666  0.51470   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.402 on 16 degrees of freedom\nMultiple R-squared:  0.027, Adjusted R-squared:  -0.03381 \nF-statistic: 0.444 on 1 and 16 DF,  p-value: 0.5147\n\nshapiro.test(reg_rich$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  reg_rich$residuals\nW = 0.95376, p-value = 0.487\n\nhist(reg_rich$residuals)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#plotting-the-graph-1",
+    "href": "species_richness.html#plotting-the-graph-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.13 Plotting the graph",
+    "text": "1.13 Plotting the graph\n\nplot2 &lt;-\n  ggplot(set, \n         aes(x = obstruction, y = Richness, fill = tipos_florestais)) + \n  \n  geom_point(colour = \"black\", size = 2.5, shape = 21) +\n  \n  scale_y_continuous(limits = c(0, 40),\n                     breaks = c(0,10,20,30, 40))+\n  \n  scale_fill_manual(values = c(\"#812DBF\",\"#2DBF81\", \"#BF812D\"),\n                    labels = c(\"Araucaria plantation\",\"Natural forest\", \"Pine plantation\")) +\n  \n  labs(x = \"Understorey vegetation obstruction (%)\", y = \"Number of species\",\n           tag = \"a\") +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = \"none\") +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#saving-the-graph-1",
+    "href": "species_richness.html#saving-the-graph-1",
+    "title": "1  Bird Species Richness",
+    "section": "1.14 Saving the graph",
+    "text": "1.14 Saving the graph\n\nplot2\n\n\n\n\n\n\n\nggsave(\n  plot = plot1,\n  filename = \"richness.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#load-packages",
+    "href": "species_abundance.html#load-packages",
+    "title": "2  Bird Species Abundance",
+    "section": "3.1 Load packages",
+    "text": "3.1 Load packages\n\nlibrary(ggplot2)\nlibrary(ggpubr)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#forest-type",
+    "href": "species_richness.html#forest-type",
+    "title": "4  Bird Species Richness",
+    "section": "4.1 Forest type",
+    "text": "4.1 Forest type\n\n4.1.1 Preparing data\n\n# Group the rows of the species matrix by habitat and sums the species values within each habitat\nraref = aggregate(birds, by = list(habitat = data[1:18,2]), FUN = sum)\n\n# Set the row names\nrownames(raref) = raref$habitat\n\n# Remove the first column, keeping only the species count columns\nraref = raref[-1]\n\n# Transpose the data frame\nraref = as.data.frame(t(raref)) \n\n\n\n4.1.2 Creating rarefaction curves\n\n# Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data\nraref &lt;- iNEXT(raref, q= 0, datatype =\"abundance\", endpoint = NULL, conf = 0.95, nboot = 10)\n\n\n\n4.1.3 Plotting the graph\n\n# Extracts the size-based estimation data from the iNEXT results.\ny = raref$iNextEst$size_based\n\n# Removes extrapolated estimates\nz = y[which(y$Method != \"Extrapolation\"),]\n\n# Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data\nz$Assemblage = factor(z$Assemblage,\n                      levels = unique(z$Assemblage))\n\nplot_rich1 &lt;- \n  ggplot(data = z,\n         aes(x = m, y = qD, \n             colour = Assemblage, \n             fill = Assemblage)) +\n  \n  labs(y = \"Number of species\",\n       x = \"Number of individuals\",\n       colour = NULL, fill = NULL,\n       tag = \"a\") +\n  \n  scale_color_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                     labels = c(\"Natural forest\", \n                                \"Araucaria plantation\", \n                                \"Pine plantation\")) +\n  \n  scale_fill_manual(values = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"),\n                    labels = c(\"Natural forest\",\n                               \"Araucaria plantation\",\n                               \"Pine plantation\")) +\n  \n  geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),\n              colour = NA, alpha = 0.30, \n              show.legend = FALSE) +\n  \n  geom_line(size = 1) +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = c(0.95, 0.05),\n        legend.justification = c(0.95, 0.05), \n        axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\n4.1.4 Saving the graph\n\nplot_rich1\n\n\n\n\n\n\n\nggsave(\n  plot = plot_rich1,\n  filename = \"richness_foresttype.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_richness.html#understorey-vegetation-obstruction",
+    "href": "species_richness.html#understorey-vegetation-obstruction",
+    "title": "4  Bird Species Richness",
+    "section": "4.2 Understorey vegetation obstruction",
+    "text": "4.2 Understorey vegetation obstruction\n\n4.2.1 Preparing data\n\nspecies &lt;- data[,c(1:2, 9:59)]\n\n# Calculates species richness for each sample\nspecies[\"richness\"] &lt;- rowSums(birds&gt;0)\n\n# Creates a new data frame with forest type, species richness, and understorey vegetation obstruction\nset &lt;- data.frame(forest.type = data$forest.type,\n                  richness = species$richness,\n                  obstruction = data$obstruction)\n\n\n\n4.2.2 Fitting the linear regression model\n\n# Fits the model to assess the effect of understorey vegetation obstruction on species richness\nreg_rich &lt;- lm(richness ~ obstruction, data = set)\nsummary(reg_rich)\n\n\nCall:\nlm(formula = richness ~ obstruction, data = set)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-6.0453 -2.1640 -0.1846  2.6255  5.0749 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept) 14.67834    4.47391   3.281  0.00471 **\nobstruction  0.06013    0.09024   0.666  0.51470   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 3.402 on 16 degrees of freedom\nMultiple R-squared:  0.027, Adjusted R-squared:  -0.03381 \nF-statistic: 0.444 on 1 and 16 DF,  p-value: 0.5147\n\n# Tests the normality of model residuals \nshapiro.test(reg_rich$residuals) # It's normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  reg_rich$residuals\nW = 0.95376, p-value = 0.487\n\n\nUnderstorey vegetation obstruction had no significant effect on species richness (p = 0.5147).\n\n\n4.2.3 Plotting the graph\n\nplot_rich2 &lt;-\n  ggplot(set, \n         aes(x = obstruction, y = richness, \n             fill = forest.type)) +\n  \n  geom_point(colour = \"black\", size = 2.5, \n             shape = 21) +\n  \n  scale_y_continuous(limits = c(0, 40),\n                     breaks = c(0,10,20,30, 40)) +\n  \n  scale_fill_manual(values = c(\"#2DBF81\", \"#812DBF\", \"#BF812D\"),\n                    labels = c(\"Natural forest\",\n                               \"Araucaria plantation\",\n                               \"Pine plantation\")) +\n  \n  labs(x = \"Understorey vegetation obstruction (%)\", \n       y = \"Number of species\",\n       tag = \"a\") +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(legend.position = \"none\") +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\n4.2.4 Saving the graph\n\nplot_rich2\n\n\n\n\n\n\n\nggsave(\n  plot = plot_rich2,\n  filename = \"richness_understory.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bird Species Richness</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#forest-type",
+    "href": "species_abundance.html#forest-type",
+    "title": "5  Bird Species Abundance",
+    "section": "5.1 Forest type",
+    "text": "5.1 Forest type\n\n5.1.1 Preparing data\n\n# Calculates species abundance per sample\nabund[\"abundance\"] &lt;- rowSums(data[9:59])\n\n\n\n5.1.2 Calculating ANOVA\n\n# Performs one-way ANOVA to test for differences in species abundance among forest types\nanova &lt;- aov(abundance ~ forest.type, data = abund)\n\n\n\n5.1.3 Testing normality of ANOVA residuals\n\n# Tests whether ANOVA residuals are normally distributed\nshapiro.test(anova$residuals) # It's not normal (p &lt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.88687, p-value = 0.03412\n\n\nSince the ANOVA residuals were not normally distributed, we used the Kruskal–Wallis test instead. To compare groups, we then ran pairwise Wilcoxon tests.\n\n\n5.1.4 Calculating Kruskal-Wallis test\n\n# Performs the Kruskal-Wallis test to compare species abundance among forest types\nkruskal &lt;- kruskal.test(abundance ~ forest.type, data = abund)\nkruskal\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  abundance by forest.type\nKruskal-Wallis chi-squared = 10.561, df = 2, p-value = 0.005089\n\n\nThe number of individuals varied significantly between forest types (Kruskal-Wallis test: χ² = 10.561, df = 2, p = 0.005).\n\n\n5.1.5 Calculating Wilcoxon test\n\n# Performs pairwise Wilcoxon tests to compare forest types, with p-value adjustment using the Benjamini-Hochberg method\npair &lt;- pairwise.wilcox.test(abund$abundance, abund$forest.type, p.adjust.method = \"BH\")\npair\n\n\n    Pairwise comparisons using Wilcoxon rank sum exact test \n\ndata:  abund$abundance and abund$forest.type \n\n                       1.Natural_forest 2.Araucaria_plantation\n2.Araucaria_plantation 0.023            -                     \n3.Pine_plantation      0.023            0.041                 \n\nP value adjustment method: BH \n\n\nWilcoxon pairwise comparisons showed that species were more abundant in natural forests than in araucaria plantations (p = 0.023) and pine plantations (p = 0.023). There was also a difference in species abundance between the two plantation types (p = 0.041).\n\n\n5.1.6 Plotting the graph\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncolor &lt;- rep(c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), each = 6)\n\nplot_abund1 &lt;- \n  ggplot(data = abund,\n         aes(x = forest.type, y = abundance)) +\n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", \n               fill = c(\"#2DBF91\", \"#912DBF\",\"#BF912D\"),\n               alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape = 21, width = 0.2, \n              height = 0.2, colour = \"black\", \n              fill = color, size = 2.5) +\n  \n  scale_x_discrete(labels = c(\"Natural\\nforest\", \n                              \"Araucaria\\nplantation\",\n                              \"Pine\\nplantation\"))+\n  \n  labs(x = \" \", y = \"Number of individuals\", \n       colour=\"black\", \n       tag = \"b\") +\n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\")) \n\n\n\n5.1.7 Saving the graph\n\nplot_abund1\n\n\n\n\n\n\n\nggsave(\n  plot = plot_abund1,\n  filename = \"abundance_foresttype.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#predictor-variable-understory-vegetation-obstruction",
+    "href": "species_abundance.html#predictor-variable-understory-vegetation-obstruction",
+    "title": "2  Bird Species Abundance",
+    "section": "2.2 Predictor variable: Understory vegetation obstruction",
+    "text": "2.2 Predictor variable: Understory vegetation obstruction",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#understory-vegetation-obstruction",
+    "href": "species_abundance.html#understory-vegetation-obstruction",
+    "title": "5  Bird Species Abundance",
+    "section": "5.2 Understory vegetation obstruction",
+    "text": "5.2 Understory vegetation obstruction\n\n5.2.1 Preparing data\n\n# Creates a new data frame with forest type, species abundance, and understorey vegetation obstruction\nset &lt;- data.frame(forest.type = env_all$forest.type,\n                  abundance = abund$abundance,\n                  obstruction = env_all$obstruction)\n\n\n\n5.2.2 Fitting the regression model\n\n# Fits a linear model to assess the effect of vegetation obstruction on species abundance\nreg_abund &lt;- lm(set$abundance ~ set$obstruction)\nsummary(reg_abund)\n\n\nCall:\nlm(formula = set$abundance ~ set$obstruction)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-35.03 -10.95  -3.45  18.13  31.97 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)       2.7215    26.5522   0.102   0.9196  \nset$obstruction   1.1663     0.5355   2.178   0.0447 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 20.19 on 16 degrees of freedom\nMultiple R-squared:  0.2287,    Adjusted R-squared:  0.1804 \nF-statistic: 4.743 on 1 and 16 DF,  p-value: 0.04473\n\n# Tests the normality of model residuals and plots their histogram\nshapiro.test(reg_abund$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  reg_abund$residuals\nW = 0.95713, p-value = 0.5473\n\n\n\n\n5.2.3 Plotting the graph\n\nplot_abund2 &lt;-\n  ggplot(set, \n         aes(x = obstruction, y = abundance,\n             fill = forest.type)) +\n  \n  scale_y_continuous(limits = c(NA, 100),\n                     breaks = c(20, 40, 60, 80, 100)) +\n  \n  geom_smooth(method = \"lm\", formula = y ~ x, \n              se = TRUE, color = \"black\", \n              fill = \"gray\", fullrange = TRUE) +\n  \n  geom_point(colour = \"black\", size = 2.5, shape = 21) +\n  \n  scale_fill_manual(values = c(\"#812DBF\", \"#2DBF81\", \"#BF812D\"), \n                    labels = c(\"Araucaria plantation\", \"Natural forest\",\n                               \"Pine plantation\")) +\n  \n  labs(x = \"Understorey vegetation obstruction (%)\", \n       y = \"Number of individuals\",\n       tag = \"b\") +\n  \n  theme_pubr(base_size = 10) +\n  \n  theme(legend.position = \"none\") +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\n5.2.4 Saving the graph\n\nplot_abund2 \n\n\n\n\n\n\n\nggsave(\n  plot = plot_abund2,\n  filename = \"abundance_understory.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#forest-type",
+    "href": "species_composition.html#forest-type",
+    "title": "6  Bird Community Integrity",
+    "section": "6.1 Forest type",
+    "text": "6.1 Forest type\n\n6.1.1 Calculating Community Integrity\n\n# Defines the row indices for control sites representing natural forest\ncontrol.rows &lt;- c(1:6)\n\n# Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)\nbray.cf &lt;- as.matrix(vegdist(rel.abund, method = \"bray\"))[control.rows, control.rows]\n\n# Calculates the community integrity for control sites as the average similarity (1 minus mean Bray–Curtis distance)\nint.cf &lt;- mean(1 - colMeans(bray.cf))\n\n# Calculate the Bray-Curtis index between all sites (control and treatment)\nbray.all &lt;- as.matrix(vegdist(rel.abund, method = \"bray\"))[control.rows, ]\n\n# Calculate the community integrity index for all sites\n# Scaled by the average similarity of the control sites and expressed as a percentage\nint.all &lt;- ((1 - colMeans(bray.all)) / int.cf) * 100\n\n# Display the community integrity index for all sites\nint.all\n\n        1         2         3         4         5         6         7         8 \n101.61364  94.01150 103.93656 103.00584  98.10394  99.32853  91.83015  76.08282 \n        9        10        11        12        13        14        15        16 \n 84.77477  75.14153  98.01282  89.30392  75.94806  53.72609  55.53405  54.43151 \n       17        18 \n 79.95784  57.49437 \n\n\n\n\n6.1.2 Calculating ANOVA\n\n# Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals\nanova &lt;- aov(int.all~ data$forest.type)\nsummary(anova)\n\n                 Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ndata$forest.type  2   4219  2109.6   26.94 1.08e-05 ***\nResiduals        15   1174    78.3                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nshapiro.test(anova$residuals)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.93721, p-value = 0.2594\n\n\nThe residuals of the ANOVA model are normally distributed (p &gt; 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.\n\n# Performs Tukey's HSD test to compare pairwise differences between forest types\nTukeyHSD(anova)\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = int.all ~ data$forest.type)\n\n$`data$forest.type`\n                                              diff       lwr         upr\n2.Araucaria_plantation-1.Natural_forest  -14.14233 -27.41207  -0.8725946\n3.Pine_plantation-1.Natural_forest       -37.15135 -50.42109 -23.8816100\n3.Pine_plantation-2.Araucaria_plantation -23.00902 -36.27875  -9.7392777\n                                             p adj\n2.Araucaria_plantation-1.Natural_forest  0.0360896\n3.Pine_plantation-1.Natural_forest       0.0000077\n3.Pine_plantation-2.Araucaria_plantation 0.0011497\n\n\nThe results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p &lt; 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. There was also a significant difference in community integrity between the two plantation types.\n\n\n6.1.3 Plotting the graph\n\ntab &lt;- data.frame(forest.type = data$forest.type,\n                 integrity = int.all)\n\n# Creates a vector of colours, assigning one colour to each forest type (6 samples per type)\ncolor &lt;- rep(c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), each = 6)\n\nplot_comp1  &lt;- \n  ggplot(data = tab, \n         aes(x = forest.type, y = integrity)) +\n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", \n               fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), \n               alpha = 0.3, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.25, height = 0.3, colour = \"black\", \n              fill = color, size = 2.5) +\n  \n  scale_y_continuous(limits = c(40, 105),\n                     breaks = c(40,60,80,100)) +\n  \n  scale_x_discrete(labels = c(\"Natural\\nforest\", \"Araucaria\\nplantation\", \n                              \"Pine\\nplantation\"))+\n  \n  \n  labs(x = \" \", y = \"Community integrity (%)\", colour=\"black\", \n       tag = \"c\") +\n  \n  theme_pubr(base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3))+\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\n6.1.4 Saving the graph\n\nplot_comp1\n\n\n\n\n\n\n\nggsave(\n  plot = plot_comp1,\n  filename = \"composition_foresttype.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bird Community Integrity</span>"
+    ]
+  },
+  {
+    "objectID": "species_composition.html#understory-vegetation-obstruction",
+    "href": "species_composition.html#understory-vegetation-obstruction",
+    "title": "6  Bird Community Integrity",
+    "section": "6.2 Understory vegetation obstruction",
+    "text": "6.2 Understory vegetation obstruction\n\n6.2.1 Preparing data\n\n# Creates a new data frame with forest type, species composition, and understorey vegetation obstruction\nset &lt;- data.frame(forest.type = data$forest.type,\n                  int.all = int.all,\n                  obstruction = data$obstruction)\n\n\n\n6.2.2 Fitting the regression model\n\n# Fits a linear model to assess the effect of vegetation obstruction on species composition\nreg_int = lm(set$int.all ~ set$obstruction)\n\n# Displays a summary of the model\nsummary(reg_int)\n\n\nCall:\nlm(formula = set$int.all ~ set$obstruction)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-33.188 -10.740   4.382  12.175  17.026 \n\nCoefficients:\n                Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)      30.3533    20.1200   1.509   0.1509  \nset$obstruction   1.0773     0.4058   2.655   0.0173 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 15.3 on 16 degrees of freedom\nMultiple R-squared:  0.3058,    Adjusted R-squared:  0.2624 \nF-statistic: 7.048 on 1 and 16 DF,  p-value: 0.0173\n\n# Tests the normality of model residuals\nshapiro.test(reg_int$residuals) # It is normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  reg_int$residuals\nW = 0.91843, p-value = 0.1213\n\n\n\n\n6.2.3 Plotting the graph\n\nplot_comp2 &lt;-\n  ggplot(set, aes(x = obstruction, y = int.all, \n                  fill = forest.type)) + \n  \n  scale_y_continuous(limits = c(30, 110),\n                         breaks = c(40,60,80,100)) +\n  \n  geom_smooth(method = \"lm\", formula = y ~ x, se = TRUE, color = \"black\", fill = \"gray\") +\n  \n  geom_point(colour = \"black\", size = 2.5, shape = 21) +\n  \n  scale_fill_manual(values = c(\"#2DBF81\", \"#812DBF\", \"#BF812D\"),\n                    labels = c(\"Natural forest\", \"Araucaria plantation\",\n                               \"Pine plantation\")) +\n  \n  labs(x = \"Understorey vegetation obstruction (%)\", y = \"Community integrity (%)\",\n       tag = \"c\") +\n  \n  theme_pubr(base_size = 10) +\n  \n  theme(legend.position = \"none\") +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\n\n\n6.2.4 Saving the graph\n\nplot_comp2 \n\n\n\n\n\n\n\nggsave(\n  plot = plot_comp2,\n  filename = \"composition_understory.png\", dpi = 500,\n  width = 7, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bird Community Integrity</span>"
+    ]
+  },
+  {
+    "objectID": "species_abundance.html#indicator-species",
+    "href": "species_abundance.html#indicator-species",
+    "title": "5  Bird Species Abundance",
+    "section": "5.3 Indicator species",
+    "text": "5.3 Indicator species\n\n5.3.1 Preparing data\n\n# Selects only indicator species\nabund &lt;- abund[,c(1,6,21,38,48,53)]\n\nforest &lt;- abund[1:6, -1]\nforest &lt;- colSums(forest)\nforest &lt;- as.data.frame(forest)\ncolnames(forest)[1] &lt;- \"forest.type\"\n\n\naraucaria &lt;- abund[7:12, -1]\naraucaria &lt;- colSums(araucaria)\naraucaria &lt;- as.data.frame(araucaria)\ncolnames(araucaria)[1] &lt;- \"forest.type\"\n\npinus &lt;- abund[13:18, -1]\npinus &lt;- colSums(pinus)\npinus &lt;- as.data.frame(pinus)\ncolnames(pinus)[1] &lt;- \"forest.type\"\n\n# Creates new data.table\nforest.type &lt;- rbind(forest, araucaria, pinus)\ncolnames(forest.type)[1] &lt;- \"abundance\"\n\nforest.type$forest.type &lt;- NA\nforest.type$forest.type[1:5] &lt;- \"3_natural_forest\"\nforest.type$forest.type[6:10] &lt;- \"2_araucaria_plantation\"\nforest.type$forest.type[11:15] &lt;- \"1_pine_plantation\"\n\nforest.type$species &lt;- rownames(forest.type)\nforest.type &lt;- forest.type[,c(3,1,2)]\n\nrownames(forest.type) &lt;- NULL\n\nforest.type$species[c(1,6,11)] &lt;- \"4_Chiroxiphia_caudata\"\nforest.type$species[c(2,7,12)] &lt;- \"5_Leptopogon_amaurocephalus\"\nforest.type$species[c(3,8,13)] &lt;- \"3_Synallaxis_cinerascens\"\nforest.type$species[c(4,9,14)] &lt;- \"1_Turdus_leucomelas\"\nforest.type$species[c(5,10,15)] &lt;- \"2_Zonotrichia_capensis\"\n\n\n\n5.3.2 Plotting the graph\n\nplot_indsp &lt;-\n  ggplot(forest.type, \n         aes(x = species, y = abundance, fill = forest.type)) +\n  \n  scale_fill_manual(values = c(\"3_natural_forest\" = \"#2DBF81\",\n                               \"2_araucaria_plantation\" = \"#812DBF\",\n                               \"1_pine_plantation\" = \"#BF812D\"),\n                    labels = c(\"1_pine_plantation\" = \"Pine plantation\",\n                               \"2_araucaria_plantation\" = \"Araucaria plantation\",\n                               \"3_natural_forest\" = \"Natural forest\")) +\n  \n  geom_bar(stat = \"identity\", position = \"fill\",\n           alpha = 0.30,\n           colour = \"black\",\n           width = 0.7) +\n  \n  coord_flip() +\n  \n  scale_y_continuous(labels = scales::percent) +\n  \n  scale_x_discrete(labels = c(\"5_Leptopogon_amaurocephalus\" = \"Leptopogon amaurocephalus\",\n                              \"4_Chiroxiphia_caudata\" = \"Chiroxiphia caudata\",\n                              \"3_Synallaxis_cinerascens\" = \"Synallaxis cinerascens\",\n                              \"2_Zonotrichia_capensis\" = \"Zonotrichia capensis\",\n                              \"1_Turdus_leucomelas\" = \"Turdus leucomelas\")) +\n  \n  labs(x = \" \", y = \"Individuals captured by forest type\", fill = \" \") +\n  \n  theme_pubr(base_size = 12) +\n  \n  theme(panel.border = element_blank(),\n        axis.line = element_blank(),\n        axis.ticks = element_blank(),\n        legend.position = \"bottom\",\n        axis.text.y = element_text(face = \"italic\")) +\n  \n  guides(fill = guide_legend(reverse = TRUE))\n\n\n\n5.3.3 Saving the graph\n\nplot_indsp\n\n\n\n\n\n\n\nggsave(\n  plot = plot_indsp,\n  filename = \"abund_sp_indicadoras.png\", dpi = 500,\n  width = 7*3, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Bird Species Abundance</span>"
+    ]
+  },
+  {
+    "objectID": "characteristics_tree_plantations.html",
+    "href": "characteristics_tree_plantations.html",
+    "title": "2  Characteristics of the tree plantations",
+    "section": "",
+    "text": "Ensuring reproducibility\nset.seed(26)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Characteristics of the tree plantations</span>"
+    ]
+  },
+  {
+    "objectID": "characteristics_tree_plantations.html#age",
+    "href": "characteristics_tree_plantations.html#age",
+    "title": "2  Characteristics of the tree plantations",
+    "section": "2.1 Age",
+    "text": "2.1 Age\n\n2.1.1 Performing a t-test\n\n# Perform the Shapiro-Wilk test to check if age data is normally distributed\nshapiro.test(env_plant$age) # It's normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  env_plant$age\nW = 0.94715, p-value = 0.5957\n\n# Perform Levene's test to check for homogeneity of variances across forest types\nlevene_test(age ~ forest.type, data = env_plant) # The variances are homogeneous (p &gt; 0.05)\n\nWarning in leveneTest.default(y = y, group = group, ...): group coerced to\nfactor.\n\n\n# A tibble: 1 × 4\n    df1   df2 statistic     p\n  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1     1    10     0.546 0.477\n\n# Perform a t-test to compare age between forest types\nt.test(env_plant$age ~ env_plant$forest.type, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  env_plant$age by env_plant$forest.type\nt = 4.6696, df = 10, p-value = 0.0008813\nalternative hypothesis: true difference in means between group Araucaria_plantation and group Pine_plantation is not equal to 0\n95 percent confidence interval:\n  4.967017 14.032983\nsample estimates:\nmean in group Araucaria_plantation      mean in group Pine_plantation \n                          62.66667                           53.16667 \n\n\nThere was a significant difference in age between the two plantation types (t = 4.6696, p &lt; 0.001).\n\n\n2.1.2 Plotting the graph\n\nplot_age &lt;-\n  ggplot(data = env_plant,\n         aes(x = forest.type, y = age)) +\n  \n  scale_y_continuous(breaks = c(50, 55, 60, 65, 70, 75)) + \n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", fill = c(\"#912DBF\",\"#BF912D\"), \n               alpha = 0.30, show.legend = FALSE) + \n  \n  geom_jitter(shape= 21, \n              width = 0.2, height = 0.2, colour = \"black\", \n              fill = color, size = 2.5) + \n  \n  scale_x_discrete(labels = c(\"Araucaria\\nplantation\",\n                              \"Pine\\nplantation\")) +\n  \n  labs(x = \" \", y = \"Age in 2021 (years)\", colour=\"black\",\n       tag = \"a\") + \n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3))+\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\nplot_age",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Characteristics of the tree plantations</span>"
+    ]
+  },
+  {
+    "objectID": "characteristics_tree_plantations.html#distance-to-forest",
+    "href": "characteristics_tree_plantations.html#distance-to-forest",
+    "title": "2  Characteristics of the tree plantations",
+    "section": "2.2 Distance to forest",
+    "text": "2.2 Distance to forest\n\n2.2.1 Performing a t-test\n\n# Perform the Shapiro-Wilk test to check if the distances to the nearest natural forest are normally distributed\nshapiro.test(env_plant$distance.forest.m) # It's normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  env_plant$distance.forest.m\nW = 0.89872, p-value = 0.1527\n\n# Perform Levene's test to check for homogeneity of variances across forest types\nlevene_test(distance.forest.m ~ forest.type, data = env_plant) # The variances are homogeneous (p &gt; 0.05)\n\nWarning in leveneTest.default(y = y, group = group, ...): group coerced to\nfactor.\n\n\n# A tibble: 1 × 4\n    df1   df2 statistic     p\n  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1     1    10  0.000242 0.988\n\n# Perform a t-test to compare the distances to the nearest natural forest between forest types\nt.test(env_plant$distance.forest.m ~ env_plant$forest.type, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  env_plant$distance.forest.m by env_plant$forest.type\nt = -0.12128, df = 10, p-value = 0.9059\nalternative hypothesis: true difference in means between group Araucaria_plantation and group Pine_plantation is not equal to 0\n95 percent confidence interval:\n -749.5126  672.1339\nsample estimates:\nmean in group Araucaria_plantation      mean in group Pine_plantation \n                          764.7762                           803.4655 \n\n\nThe distance of the tree plantations to the nearest natural forest did not differ significantly between the two types of plantation (t = -0.121; p = 0.906).\n\n\n2.2.2 Plotting the graph\n\nplot_dist &lt;- \n  \n  ggplot(data = env_plant,\n         aes(x = forest.type, y = distance.forest.m)) +\n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", \n               fill = c(\"#912DBF\", \"#BF912D\"),\n               alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, width = 0.2,\n              height = 0.2, colour = \"black\", \n              fill = color, size = 2.5) +\n  \n  scale_x_discrete(labels = c(\"Araucaria\\nplantation\",\n                              \"Pine\\nplantation\")) +\n  \n  scale_y_continuous(breaks = c(200, 600, 1000, 1400, 1800)) +\n  \n  labs(x = \" \", \n       y = \"Distance to natural forest (m)\", \n       colour=\"black\",\n       tag = \"b\") +\n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\nplot_dist",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Characteristics of the tree plantations</span>"
+    ]
+  },
+  {
+    "objectID": "characteristics_tree_plantations.html#understory-vegetation-obstruction",
+    "href": "characteristics_tree_plantations.html#understory-vegetation-obstruction",
+    "title": "2  Characteristics of the tree plantations",
+    "section": "2.3 Understory vegetation obstruction",
+    "text": "2.3 Understory vegetation obstruction\n\n2.3.1 Fitting an ANOVA model\n\n# Perform the Shapiro-Wilk test to check if understorey vegetation obstruction is normally distributed\nshapiro.test(env_all$obstruction) # It's normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  env_all$obstruction\nW = 0.94235, p-value = 0.3177\n\n# Perform Levene's test to check for homogeneity of variances across forest types\nlevene_test(obstruction ~ as.factor(forest.type), data = env_all) # The variances are homogeneous (p &gt; 0.05)\n\n# A tibble: 1 × 4\n    df1   df2 statistic     p\n  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1     2    15      1.22 0.322\n\n# Perform one-way ANOVA to test for differences in understorey vegetation obstruction between forest types\nanova &lt;- aov(obstruction ~ forest.type, data = env_all)\nsummary(anova)\n\n            Df Sum Sq Mean Sq F value Pr(&gt;F)  \nforest.type  2  630.8  315.39   5.986 0.0123 *\nResiduals   15  790.3   52.69                 \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n# Perform the Shapiro-Wilk test on the residuals to check if they are normally distributed\nshapiro.test(anova$residuals) # Residuals of the ANOVA model are normal (p &gt; 0.05)\n\n\n    Shapiro-Wilk normality test\n\ndata:  anova$residuals\nW = 0.9706, p-value = 0.8089\n\n# Perform Levene's test on residuals to check for homogeneity of variances\nlevene_test(anova$residuals ~ as.factor(forest.type), data = env_all) # The variances are homogeneous (p &gt; 0.05)\n\n# A tibble: 1 × 4\n    df1   df2 statistic     p\n  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1     2    15      1.22 0.322\n\n# Perform Tukey's HSD post-hoc test to compare pairwise differences between forest types\npar_par &lt;- TukeyHSD(anova)\npar_par\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = obstruction ~ forest.type, data = env_all)\n\n$forest.type\n                                           diff        lwr       upr     p adj\nNatural_forest-Araucaria_plantation    2.166667  -8.718861 13.052194 0.8642904\nPine_plantation-Araucaria_plantation -11.333333 -22.218861 -0.447806 0.0408047\nPine_plantation-Natural_forest       -13.500000 -24.385527 -2.614473 0.0148458\n\n\nUnderstorey vegetation obstruction significantly differed between forest types (F = 5.986, p = 0.01). We found significant differences between pine plantations and natural forests (diff = -13.50, p = 0.015) and between pine plantations and araucaria plantations (diff = -11.33, p = 0.041). No significant difference was found between araucaria plantations and natural forests (diff = 2.16, p = 0.864).\n\n\n2.3.2 Plotting the graph\n\n# Renaming forest types for consistent ordering in the plot\nenv_all$forest.type[env_all$forest.type == \"Natural_forest\"] &lt;- \"1.Natural_forest\"\n\nenv_all$forest.type[env_all$forest.type == \"Araucaria_plantation\"] &lt;- \"2.Araucaria_plantation\"\n\nenv_all$forest.type[env_all$forest.type == \"Pine_plantation\"] &lt;- \"3.Pine_plantation\"\n\nplot_obs &lt;- \n  ggplot(data = env_all,\n         aes(x = forest.type, y = obstruction)) +\n  \n  geom_boxplot(outlier.shape = NA,\n               width = 0.7, col = \"black\", \n               fill = c(\"#2DBF91\", \"#912DBF\", \"#BF912D\"), \n               alpha = 0.30, show.legend = FALSE) +\n  \n  geom_jitter(shape= 21, \n              width = 0.2, height = 0.2, colour = \"black\", \n              fill = color_complete, size = 2.5) +\n  \n  scale_x_discrete(labels = c(\"Natural \\nforest\",\n                              \"Araucaria\\nplantation\",\n                              \"Pine\\nplantation\")) +\n  \n  labs(x = \" \", y = \"Understorey obstruction (%)\", colour=\"black\",\n       tag = \"c\") + \n  \n  theme_pubr (base_size = 10) + \n  \n  theme(axis.line = element_line(linewidth = 1/3)) +\n  \n  theme(plot.tag = element_text(size = 16, face = \"bold\"))\n\nplot_obs\n\n\n\n\n\n\n\n\n\n\n2.3.3 Saving the graph\n\nggsave(\n  plot = plot_age + plot_dist + plot_obs,\n  filename = \"charact_plantation.png\", dpi = 500,\n  width = 7 * 3, height = 7, units = 'cm')",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Characteristics of the tree plantations</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#data-access",
+    "href": "index.html#data-access",
+    "title": "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna",
+    "section": "1.1 Data Access",
+    "text": "1.1 Data Access\nAll data used in the paper and in this code are available on the KNB platform: https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#attribution",
+    "href": "index.html#attribution",
+    "title": "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna",
+    "section": "1.2 Attribution",
+    "text": "1.2 Attribution\nIf you need any clarification or are interested in the project, please contact:\nIvana Cardoso (ivanawaters@gmail.com)\nPhD student, Instituto Nacional de Pesquisas da Amazônia",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "indicator_species.html",
+    "href": "indicator_species.html",
+    "title": "3  Indicator Species",
+    "section": "",
+    "text": "Ensuring reproducibility\nset.seed(1341562062)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Indicator Species</span>"
+    ]
+  },
+  {
+    "objectID": "indicator_species.html#identifying-indicator-species",
+    "href": "indicator_species.html#identifying-indicator-species",
+    "title": "3  Indicator Species",
+    "section": "3.1 Identifying indicator species",
+    "text": "3.1 Identifying indicator species\n\n3.1.1 Calculates the indicator value for each species\n\nindval &lt;-  multipatt(data[9:59], cluster = grup, \n                     func = \"IndVal.g\", control = how(nperm = 999))\n\nindval &lt;- as.vector(indval)\n\n\n\n3.1.2 Summary the results\n\nsummary(indval, indvalcomp = TRUE)\n\n\n Multilevel pattern analysis\n ---------------------------\n\n Association function: IndVal.g\n Significance level (alpha): 0.05\n\n Total number of species: 51\n Selected number of species: 5 \n Number of species associated to 1 group: 1 \n Number of species associated to 2 groups: 4 \n\n List of species associated to each combination: \n\n Group Natural_forest  #sps.  1 \n                            A   B  stat p.value    \nLeptopogon_amaurocephalus 0.8 1.0 0.894   0.001 ***\n\n Group Araucaria_plantation+Natural_forest  #sps.  2 \n                            A      B  stat p.value   \nSynallaxis_cinerascens 0.8723 1.0000 0.934   0.005 **\nChiroxiphia_caudata    0.9365 0.9167 0.927   0.020 * \n\n Group Araucaria_plantation+Pine_plantation  #sps.  1 \n                          A      B  stat p.value   \nZonotrichia_capensis 0.9107 1.0000 0.954   0.007 **\n\n Group Natural_forest+Pine_plantation  #sps.  1 \n                       A      B  stat p.value  \nTurdus_leucomelas 1.0000 0.6667 0.816   0.031 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 \n\n\n\n\n\nFig. 1 Leptopogon amaurocephalus, a species associated with natural forests.\n\n\n\n\n\nFig. 2 Synallaxis cinerascens, a species associated with araucaria plantations and natural forests.\n\n\n\n\n\nFig. 3 Chiroxiphia caudata, a species associated with araucaria plantations and natural forests.\n\n\n\n\n\nFig. 4 Zonotrichia capensis, a species associated with araucaria and pine plantations.\n\n\n\n\n\nFig. 5 Turdus leucomelas, a species associated with pine plantations and natural forests.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Indicator Species</span>"
     ]
   }
 ]

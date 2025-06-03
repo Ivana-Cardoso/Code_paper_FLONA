@@ -1,0 +1,60 @@
+# Indicator Species
+To identify indicator species associated with each forest type, we conducted an Indicator Species Analysis using the *multipatt* function from the *indicspecies* package. The threshold for the IndVal index was set at 0.70.
+
+### Ensuring reproducibility {.unnumbered}
+```{r}
+set.seed(1341562062)
+```
+
+### Loading packages {.unnumbered}
+```{r, output = FALSE}
+library(indicspecies)
+library(vegan)
+```
+
+### Importing data {.unnumbered}
+```{r}
+#| code-overflow: wrap
+
+# https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/data")
+data <- read.csv("FLONA-PF_dataset.txt", sep = "\t")
+```
+
+### Preparing data {.unnumbered}
+```{r}
+grup <- as.factor(data$forest.type)
+```
+
+## Identifying indicator species
+### Calculates the indicator value for each species 
+```{r}
+#| code-overflow: wrap
+indval <-  multipatt(data[9:59], cluster = grup, 
+                     func = "IndVal.g", control = how(nperm = 999))
+
+indval <- as.vector(indval)
+```
+
+### Summary the results
+```{r}
+#| code-overflow: wrap
+summary(indval, indvalcomp = TRUE)
+```
+
+
+
+![Fig. 1 *Leptopogon amaurocephalus*, a species associated with **natural forests**. ](P4_2021-07-31_Leptopogon_amaurocephalus.jpg){fig-align="left" width="40%"}
+
+
+![Fig. 2 *Synallaxis cinerascens*, a species associated with **araucaria plantations and natural forests**. ](N1_2022_04_15_Synallaxis_cinerascens.jpeg){fig-align="left" width="40%"}
+
+
+![Fig. 3 *Chiroxiphia caudata*, a species associated with **araucaria plantations and natural forests**. ](A6_2021-08-19_Chiroxiphia_caudata.jpg){fig-align="left" width="40%"}
+
+![Fig. 4 *Zonotrichia capensis*, a species associated with **araucaria and pine plantations**. ](P4_2021-07-30_Zonotrichia_capensis.jpg){fig-align="left" width="40%"}
+
+![Fig. 5 *Turdus leucomelas*, a species associated with **pine plantations and natural forests**. ](P5_2022_04_14_Turdus_leucomelas.jpeg){fig-align="left" width="40%"}
+
+
+

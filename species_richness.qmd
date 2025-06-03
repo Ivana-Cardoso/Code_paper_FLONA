@@ -1,80 +1,106 @@
-## Bird Species Richness
+# Bird Species Richness
 
-We compared how species richness changes across forest types creating one rarefaction curve for each type. These curves were based on 1,000 bootstrap replications and standardised by the number of individuals recorded. We considered differences in species richness to be significant when the 95% confidence intervals of the curves did not overlap.
+Predictor variables:
 
-## Load packages
+1. **Forest type** - We compared species richness among the three forest types using rarefaction curves from *iNEXT* package. These curves were based on 1000 bootstrap replications. We considered differences in species richness to be significant when the 95% confidence intervals of the curves did not overlap. 
+
+2. **Understorey vegetation obstruction** - We performed simple linear regression analyses to investigate the effect of understorey vegetation obstruction on species richness.
+
+### Ensuring reproducibility {.unnumbered}
+```{r}
+set.seed(26)
+```
+
+### Loading packages {.unnumbered}
 ```{r, output = FALSE}
 library(ggplot2)
 library(iNEXT)
 library(ggpubr)
+library(dplyr)
+library(rstatix)
 ```
 
-## Importing data
-```{r, output = FALSE}
-setwd("C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R")
-data <- read.csv("abundance_matrix.csv")
-species <- data[3:53]
-```
-
-## Preparing data
+### Importing data {.unnumbered}
 ```{r, output = FALSE}
 #| code-overflow: wrap
-# Groups the rows of the species matrix by habitat and sums the species values within each habitat group
-raref = aggregate(species, by = list(habitat = data[1:18,1]), FUN = sum)
-
-# Set the row names of the 'raref' table using the values from the 'habitat' column (created in the previous step)
-rownames(raref) = raref$habitat
-
-# Remove the first column (habitat), keeping only the species count columns
-raref = raref[-1]
-
-# Transpose the data frame: now each row represents a species and each column represents a habitat
-raref = as.data.frame(t(raref)) 
-
-# Calculates the sum of each column — that is, the total number of individuals per habitat, summing across all species
-colSums(raref)
+# https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/data")
+data <- read.csv("FLONA-PF_dataset.txt", sep = "\t")
+birds <- data[,c(9:59)]
 ```
 
-## Creating rarefaction curves
+### Preparing data {.unnumbered}
+```{r}
+# Renaming forest types for consistent ordering in the plot
+data$forest.type <- recode(data$forest.type,
+                           "Natural_forest" = "1.Natural_forest",
+                           "Araucaria_plantation" = "2.Araucaria_plantation",
+                           "Pine_plantation" = "3.Pine_plantation")
+```
+
+## Forest type
+### Preparing data
+```{r, output = FALSE}
+#| code-overflow: wrap
+# Group the rows of the species matrix by habitat and sums the species values within each habitat
+raref = aggregate(birds, by = list(habitat = data[1:18,2]), FUN = sum)
+
+# Set the row names
+rownames(raref) = raref$habitat
+
+# Remove the first column, keeping only the species count columns
+raref = raref[-1]
+
+# Transpose the data frame
+raref = as.data.frame(t(raref)) 
+```
+
+### Creating rarefaction curves
 ```{r, output = FALSE}
 #| code-overflow: wrap
 # Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data
-raref <- iNEXT(raref, q= 0, datatype ="abundance", endpoint = NULL, conf = 0.95, nboot = 1000)
+raref <- iNEXT(raref, q= 0, datatype ="abundance", endpoint = NULL, conf = 0.95, nboot = 10)
 ```
 
-## Plotting the graph
+### Plotting the graph
 ```{r, output = FALSE}
 #| code-overflow: wrap
 # Extracts the size-based estimation data from the iNEXT results.
 y = raref$iNextEst$size_based
 
-# Removes extrapolated estimates for habitats other than "natural_forest"
-z = y[-which(y$Assemblage != "natural_forest" &
-               y$Method == "Extrapolation"), ]
+# Removes extrapolated estimates
+z = y[which(y$Method != "Extrapolation"),]
 
 # Converts the 'Assemblage' column to a factor with levels ordered by their appearance in the data
 z$Assemblage = factor(z$Assemblage,
                       levels = unique(z$Assemblage))
 
-
-plot1 <- 
-  ggplot(data = z, aes(x = m, y = qD, colour = Assemblage, fill = Assemblage)) +
+plot_rich1 <- 
+  ggplot(data = z,
+         aes(x = m, y = qD, 
+             colour = Assemblage, 
+             fill = Assemblage)) +
   
-   labs(y = "Number of species",
-        x = "Number of individuals", colour = NULL, fill = NULL,
-        tag = "a") +
+  labs(y = "Number of species",
+       x = "Number of individuals",
+       colour = NULL, fill = NULL,
+       tag = "a") +
   
+  scale_color_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
+                     labels = c("Natural forest", 
+                                "Araucaria plantation", 
+                                "Pine plantation")) +
   
-    scale_color_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
-                     labels = c("Natural forest", "Araucaria plantation", "Pine plantation")) +
+  scale_fill_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
+                    labels = c("Natural forest",
+                               "Araucaria plantation",
+                               "Pine plantation")) +
   
-    scale_fill_manual(values = c("#2DBF91", "#912DBF", "#BF912D"),
-                    labels = c("Natural forest","Araucaria plantation","Pine plantation")) +
+  geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),
+              colour = NA, alpha = 0.30, 
+              show.legend = FALSE) +
   
-    geom_ribbon(aes(ymin = qD.LCL, ymax = qD.UCL),
-              colour = NA, alpha = 0.30, show.legend = FALSE) +
-  
-    geom_line(size = 1) +
+  geom_line(size = 1) +
   
   theme_pubr(base_size = 10) + 
   
@@ -83,17 +109,82 @@ plot1 <-
         axis.line = element_line(linewidth = 1/3)) +
   
   theme(plot.tag = element_text(size = 16, face = "bold"))
-
 ```
 
-## Saving the graph
+### Saving the graph
 ```{r}
 #| code-overflow: wrap
-plot1
+plot_rich1
 ggsave(
-  plot = plot1,
-  filename = "richness.png", dpi = 500,
+  plot = plot_rich1,
+  filename = "richness_foresttype.png", dpi = 500,
   width = 7, height = 7, units = 'cm')
 ```
 
-When we standardised the sampling effort to 245 individuals (the smallest sample size), the rarefied species richness was similar across the three forest types. This is because the 95% confidence intervals of the richness estimates overlapped.
+
+## Understorey vegetation obstruction
+### Preparing data
+```{r}
+#| code-overflow: wrap
+species <- data[,c(1:2, 9:59)]
+
+# Calculates species richness for each sample
+species["richness"] <- rowSums(birds>0)
+
+# Creates a new data frame with forest type, species richness, and understorey vegetation obstruction
+set <- data.frame(forest.type = data$forest.type,
+                  richness = species$richness,
+                  obstruction = data$obstruction)
+```
+
+### Fitting the linear regression model
+```{r}
+#| code-overflow: wrap
+# Fits the model to assess the effect of understorey vegetation obstruction on species richness
+reg_rich <- lm(richness ~ obstruction, data = set)
+summary(reg_rich)
+
+# Tests the normality of model residuals 
+shapiro.test(reg_rich$residuals) # It's normal (p > 0.05)
+```
+
+Understorey vegetation obstruction had no significant effect on species richness (p = 0.5147).
+
+### Plotting the graph
+```{r, output = FALSE}
+#| code-overflow: wrap
+plot_rich2 <-
+  ggplot(set, 
+         aes(x = obstruction, y = richness, 
+             fill = forest.type)) +
+  
+  geom_point(colour = "black", size = 2.5, 
+             shape = 21) +
+  
+  scale_y_continuous(limits = c(0, 40),
+                     breaks = c(0,10,20,30, 40)) +
+  
+  scale_fill_manual(values = c("#2DBF81", "#812DBF", "#BF812D"),
+                    labels = c("Natural forest",
+                               "Araucaria plantation",
+                               "Pine plantation")) +
+  
+  labs(x = "Understorey vegetation obstruction (%)", 
+       y = "Number of species",
+       tag = "a") +
+  
+  theme_pubr(base_size = 10) + 
+  
+  theme(legend.position = "none") +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+```
+
+### Saving the graph
+```{r}
+plot_rich2
+ggsave(
+  plot = plot_rich2,
+  filename = "richness_understory.png", dpi = 500,
+  width = 7, height = 7, units = 'cm')
+```

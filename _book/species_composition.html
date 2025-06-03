@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Bird Species Composition – Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna</title>
+<title>6&nbsp; Bird Community Integrity – Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
 <link href="./species_abundance.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -115,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./species_composition.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bird Species Composition</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./species_composition.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bird Community Integrity</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,31 +142,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./characteristics_tree_plantations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Characteristics of the tree plantations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./indicator_species.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Indicator Species</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./species_richness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bird Species Richness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bird Species Richness</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./species_abundance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bird Species Abundance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bird Species Abundance</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./species_composition.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bird Species Composition</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bird Community Integrity</span></span></a>
   </div>
 </li>
     </ul>
@@ -180,13 +185,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#load-packages" id="toc-load-packages" class="nav-link active" data-scroll-target="#load-packages"><span class="header-section-number">3.1</span> Load packages</a></li>
-  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><span class="header-section-number">3.2</span> Importing data</a></li>
-  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data"><span class="header-section-number">3.3</span> Preparing data</a></li>
-  <li><a href="#calculating-community-integrity" id="toc-calculating-community-integrity" class="nav-link" data-scroll-target="#calculating-community-integrity"><span class="header-section-number">3.4</span> Calculating Community Integrity</a></li>
-  <li><a href="#calculating-anova" id="toc-calculating-anova" class="nav-link" data-scroll-target="#calculating-anova"><span class="header-section-number">3.5</span> Calculating ANOVA</a></li>
-  <li><a href="#plotting-the-graph" id="toc-plotting-the-graph" class="nav-link" data-scroll-target="#plotting-the-graph"><span class="header-section-number">3.6</span> Plotting the graph</a></li>
-  <li><a href="#saving-the-graph" id="toc-saving-the-graph" class="nav-link" data-scroll-target="#saving-the-graph"><span class="header-section-number">3.7</span> Saving the graph</a></li>
+  <li><a href="#ensuring-reproducibility" id="toc-ensuring-reproducibility" class="nav-link active" data-scroll-target="#ensuring-reproducibility">Ensuring Reproducibility</a></li>
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link" data-scroll-target="#load-packages">Load packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data">Preparing data</a></li>
+  <li><a href="#forest-type" id="toc-forest-type" class="nav-link" data-scroll-target="#forest-type"><span class="header-section-number">6.1</span> Forest type</a>
+  <ul class="collapse">
+  <li><a href="#calculating-community-integrity" id="toc-calculating-community-integrity" class="nav-link" data-scroll-target="#calculating-community-integrity"><span class="header-section-number">6.1.1</span> Calculating Community Integrity</a></li>
+  <li><a href="#calculating-anova" id="toc-calculating-anova" class="nav-link" data-scroll-target="#calculating-anova"><span class="header-section-number">6.1.2</span> Calculating ANOVA</a></li>
+  <li><a href="#plotting-the-graph" id="toc-plotting-the-graph" class="nav-link" data-scroll-target="#plotting-the-graph"><span class="header-section-number">6.1.3</span> Plotting the graph</a></li>
+  <li><a href="#saving-the-graph" id="toc-saving-the-graph" class="nav-link" data-scroll-target="#saving-the-graph"><span class="header-section-number">6.1.4</span> Saving the graph</a></li>
+  </ul></li>
+  <li><a href="#understory-vegetation-obstruction" id="toc-understory-vegetation-obstruction" class="nav-link" data-scroll-target="#understory-vegetation-obstruction"><span class="header-section-number">6.2</span> Understory vegetation obstruction</a>
+  <ul class="collapse">
+  <li><a href="#preparing-data-1" id="toc-preparing-data-1" class="nav-link" data-scroll-target="#preparing-data-1"><span class="header-section-number">6.2.1</span> Preparing data</a></li>
+  <li><a href="#fitting-the-regression-model" id="toc-fitting-the-regression-model" class="nav-link" data-scroll-target="#fitting-the-regression-model"><span class="header-section-number">6.2.2</span> Fitting the regression model</a></li>
+  <li><a href="#plotting-the-graph-1" id="toc-plotting-the-graph-1" class="nav-link" data-scroll-target="#plotting-the-graph-1"><span class="header-section-number">6.2.3</span> Plotting the graph</a></li>
+  <li><a href="#saving-the-graph-1" id="toc-saving-the-graph-1" class="nav-link" data-scroll-target="#saving-the-graph-1"><span class="header-section-number">6.2.4</span> Saving the graph</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -195,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bird Species Composition</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bird Community Integrity</span></h1>
 </div>
 
 
@@ -212,76 +228,94 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We assessed how similar the species composition of tree plantations was to that of natural forests using a measure called community integrity. This measure compares both the number of individuals and the types of species found in tree plantations to those in natural forests, which serve as a reference.</p>
-<p>To find out whether the different forest types were significantly different from each other, we ran an ANOVA test. When the ANOVA showed a significant result, we used Tukey’s post hoc test to see which specific types differed.</p>
-<section id="load-packages" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="load-packages"><span class="header-section-number">3.1</span> Load packages</h2>
+<p>Predictor variables:</p>
+<ol type="1">
+<li><p><strong>Forest type</strong> - We performed an ANOVA test followed by a Tukey’s post hoc test to identify which forest types exhibited significant differences in community integrity from each other.</p></li>
+<li><p><strong>Understorey vegetation obstruction</strong> - We performed simple linear regression analyses to investigate the effect of understorey vegetation obstruction on community integrity.</p></li>
+</ol>
+<section id="ensuring-reproducibility" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ensuring-reproducibility">Ensuring Reproducibility</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">26</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="importing-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">3.2</span> Importing data</h2>
+<section id="load-packages" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="load-packages">Load packages</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"abundance_matrix.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="preparing-data" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="preparing-data"><span class="header-section-number">3.3</span> Preparing data</h2>
+<section id="importing-data" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="importing-data">Importing data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalises the data by dividing each value by the sum of its row, converting counts to relative abundances</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rel.abund <span class="ot">&lt;-</span> data[<span class="dv">3</span><span class="sc">:</span><span class="dv">53</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>rel.abund <span class="ot">&lt;-</span> rel.abund<span class="sc">/</span><span class="fu">rowSums</span>(rel.abund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/ivana/OneDrive/FLONA_aves/data"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"FLONA-PF_dataset.txt"</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="calculating-community-integrity" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="calculating-community-integrity"><span class="header-section-number">3.4</span> Calculating Community Integrity</h2>
+<section id="preparing-data" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="preparing-data">Preparing data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defines the row indices for control sites representing natural forest</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>control.rows <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">12</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>bray.cf <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">vegdist</span>(rel.abund, <span class="at">method =</span> <span class="st">"bray"</span>))[control.rows, control.rows]</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Renaming forest types for consistent ordering in the plot</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>forest.type <span class="ot">&lt;-</span> <span class="fu">recode</span>(data<span class="sc">$</span>forest.type,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Natural_forest"</span> <span class="ot">=</span> <span class="st">"1.Natural_forest"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Araucaria_plantation"</span> <span class="ot">=</span> <span class="st">"2.Araucaria_plantation"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Pine_plantation"</span> <span class="ot">=</span> <span class="st">"3.Pine_plantation"</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculates the community integrity for control sites as the average similarity (1 minus mean Bray–Curtis distance)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>int.cf <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">colMeans</span>(bray.cf))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Bray-Curtis index between all sites (control and treatment)</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>bray.all <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">vegdist</span>(rel.abund, <span class="at">method =</span> <span class="st">"bray"</span>))[control.rows, ]</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the community integrity index for all sites</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaled by the average similarity of the control sites and expressed as a percentage</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>int.all <span class="ot">&lt;-</span> ((<span class="dv">1</span> <span class="sc">-</span> <span class="fu">colMeans</span>(bray.all)) <span class="sc">/</span> int.cf) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the community integrity index for all sites</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>int.all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>abund <span class="ot">&lt;-</span> data[,<span class="fu">c</span>(<span class="dv">9</span><span class="sc">:</span><span class="dv">59</span>)]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>rel.abund <span class="ot">&lt;-</span> abund<span class="sc">/</span><span class="fu">rowSums</span>(abund)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="forest-type" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="forest-type"><span class="header-section-number">6.1</span> Forest type</h2>
+<section id="calculating-community-integrity" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="calculating-community-integrity"><span class="header-section-number">6.1.1</span> Calculating Community Integrity</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defines the row indices for control sites representing natural forest</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>control.rows <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>bray.cf <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">vegdist</span>(rel.abund, <span class="at">method =</span> <span class="st">"bray"</span>))[control.rows, control.rows]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculates the community integrity for control sites as the average similarity (1 minus mean Bray–Curtis distance)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>int.cf <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">colMeans</span>(bray.cf))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Bray-Curtis index between all sites (control and treatment)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>bray.all <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">vegdist</span>(rel.abund, <span class="at">method =</span> <span class="st">"bray"</span>))[control.rows, ]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the community integrity index for all sites</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaled by the average similarity of the control sites and expressed as a percentage</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>int.all <span class="ot">&lt;-</span> ((<span class="dv">1</span> <span class="sc">-</span> <span class="fu">colMeans</span>(bray.all)) <span class="sc">/</span> int.cf) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the community integrity index for all sites</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>int.all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        1         2         3         4         5         6         7         8 
- 91.83015  76.08282  84.77477  75.14153  98.01282  89.30392 101.61364  94.01150 
+101.61364  94.01150 103.93656 103.00584  98.10394  99.32853  91.83015  76.08282 
         9        10        11        12        13        14        15        16 
-103.93656 103.00584  98.10394  99.32853  75.94806  53.72609  55.53405  54.43151 
+ 84.77477  75.14153  98.01282  89.30392  75.94806  53.72609  55.53405  54.43151 
        17        18 
  79.95784  57.49437 </code></pre>
 </div>
 </div>
 </section>
-<section id="calculating-anova" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="calculating-anova"><span class="header-section-number">3.5</span> Calculating ANOVA</h2>
+<section id="calculating-anova" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="calculating-anova"><span class="header-section-number">6.1.2</span> Calculating ANOVA</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(int.all<span class="sc">~</span> data<span class="sc">$</span>tipos_florestais)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(int.all<span class="sc">~</span> data<span class="sc">$</span>forest.type)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                      Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-data$tipos_florestais  2   4219  2109.6   26.94 1.08e-05 ***
-Residuals             15   1174    78.3                     
+<pre><code>                 Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+data$forest.type  2   4219  2109.6   26.94 1.08e-05 ***
+Residuals        15   1174    78.3                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(anova<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(anova<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -292,72 +326,181 @@ W = 0.93721, p-value = 0.2594</code></pre>
 </div>
 <p>The residuals of the ANOVA model are normally distributed (p &gt; 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performs Tukey's HSD test to compare pairwise differences between forest types</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performs Tukey's HSD test to compare pairwise differences between forest types</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
 
-Fit: aov(formula = int.all ~ data$tipos_florestais)
+Fit: aov(formula = int.all ~ data$forest.type)
 
-$`data$tipos_florestais`
-                                               diff       lwr         upr
-Plantacao_de_araucaria-Floresta_natural   -14.14233 -27.41207  -0.8725946
-Plantacao_de_pinus-Floresta_natural       -37.15135 -50.42109 -23.8816100
-Plantacao_de_pinus-Plantacao_de_araucaria -23.00902 -36.27875  -9.7392777
-                                              p adj
-Plantacao_de_araucaria-Floresta_natural   0.0360896
-Plantacao_de_pinus-Floresta_natural       0.0000077
-Plantacao_de_pinus-Plantacao_de_araucaria 0.0011497</code></pre>
+$`data$forest.type`
+                                              diff       lwr         upr
+2.Araucaria_plantation-1.Natural_forest  -14.14233 -27.41207  -0.8725946
+3.Pine_plantation-1.Natural_forest       -37.15135 -50.42109 -23.8816100
+3.Pine_plantation-2.Araucaria_plantation -23.00902 -36.27875  -9.7392777
+                                             p adj
+2.Araucaria_plantation-1.Natural_forest  0.0360896
+3.Pine_plantation-1.Natural_forest       0.0000077
+3.Pine_plantation-2.Araucaria_plantation 0.0011497</code></pre>
+</div>
+</div>
+<p>The results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p &lt; 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. There was also a significant difference in community integrity between the two plantation types.</p>
+</section>
+<section id="plotting-the-graph" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="plotting-the-graph"><span class="header-section-number">6.1.3</span> Plotting the graph</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">forest.type =</span> data<span class="sc">$</span>forest.type,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">integrity =</span> int.all)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a vector of colours, assigning one colour to each forest type (6 samples per type)</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>color <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"#2DBF91"</span>, <span class="st">"#912DBF"</span>, <span class="st">"#BF912D"</span>), <span class="at">each =</span> <span class="dv">6</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plot_comp1  <span class="ot">&lt;-</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> tab, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> forest.type, <span class="at">y =</span> integrity)) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">col =</span> <span class="st">"black"</span>, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"#2DBF91"</span>, <span class="st">"#912DBF"</span>, <span class="st">"#BF912D"</span>), </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">shape=</span> <span class="dv">21</span>, </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.3</span>, <span class="at">colour =</span> <span class="st">"black"</span>, </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> color, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">105</span>),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Natural</span><span class="sc">\n</span><span class="st">forest"</span>, <span class="st">"Araucaria</span><span class="sc">\n</span><span class="st">plantation"</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Pine</span><span class="sc">\n</span><span class="st">plantation"</span>))<span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">" "</span>, <span class="at">y =</span> <span class="st">"Community integrity (%)"</span>, <span class="at">colour=</span><span class="st">"black"</span>, </span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">"c"</span>) <span class="sc">+</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))<span class="sc">+</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="saving-the-graph" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="saving-the-graph"><span class="header-section-number">6.1.4</span> Saving the graph</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_comp1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="species_composition_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> plot_comp1,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"composition_foresttype.png"</span>, <span class="at">dpi =</span> <span class="dv">500</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">'cm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="understory-vegetation-obstruction" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="understory-vegetation-obstruction"><span class="header-section-number">6.2</span> Understory vegetation obstruction</h2>
+<section id="preparing-data-1" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="preparing-data-1"><span class="header-section-number">6.2.1</span> Preparing data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a new data frame with forest type, species composition, and understorey vegetation obstruction</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>set <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">forest.type =</span> data<span class="sc">$</span>forest.type,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">int.all =</span> int.all,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">obstruction =</span> data<span class="sc">$</span>obstruction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fitting-the-regression-model" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="fitting-the-regression-model"><span class="header-section-number">6.2.2</span> Fitting the regression model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fits a linear model to assess the effect of vegetation obstruction on species composition</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>reg_int <span class="ot">=</span> <span class="fu">lm</span>(set<span class="sc">$</span>int.all <span class="sc">~</span> set<span class="sc">$</span>obstruction)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Displays a summary of the model</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_int)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = set$int.all ~ set$obstruction)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-33.188 -10.740   4.382  12.175  17.026 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)      30.3533    20.1200   1.509   0.1509  
+set$obstruction   1.0773     0.4058   2.655   0.0173 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.3 on 16 degrees of freedom
+Multiple R-squared:  0.3058,    Adjusted R-squared:  0.2624 
+F-statistic: 7.048 on 1 and 16 DF,  p-value: 0.0173</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tests the normality of model residuals</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(reg_int<span class="sc">$</span>residuals) <span class="co"># It is normal (p &gt; 0.05)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  reg_int$residuals
+W = 0.91843, p-value = 0.1213</code></pre>
 </div>
 </div>
 </section>
-<section id="plotting-the-graph" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="plotting-the-graph"><span class="header-section-number">3.6</span> Plotting the graph</h2>
+<section id="plotting-the-graph-1" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="plotting-the-graph-1"><span class="header-section-number">6.2.3</span> Plotting the graph</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-overflow-wrap code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">tipos_florestais =</span> data<span class="sc">$</span>tipos_florestais,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">integrity =</span> int.all)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates a vector of colours, assigning one colour to each forest type (6 samples per type)</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>cor <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"#912DBF"</span>,<span class="st">"#2DBF91"</span>,<span class="st">"#BF912D"</span>), <span class="at">each =</span> <span class="dv">6</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">&lt;-</span> </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> tab, </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> tipos_florestais, <span class="at">y =</span> integrity)) <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"#2DBF91"</span>, <span class="st">"#912DBF"</span>, <span class="st">"#BF912D"</span>), <span class="at">alpha =</span><span class="fl">0.3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">shape=</span> <span class="dv">21</span>, </span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.3</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span>cor, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="fl">103.93656</span>),</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>)) <span class="sc">+</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Natural</span><span class="sc">\n</span><span class="st">forest"</span>, <span class="st">"Araucaria</span><span class="sc">\n</span><span class="st">plantation"</span>, <span class="st">"Pine</span><span class="sc">\n</span><span class="st">plantation"</span>))<span class="sc">+</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">" "</span>, <span class="at">y =</span> <span class="st">"Community integrity (%)"</span>, <span class="at">colour=</span><span class="st">"black"</span>, </span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">"c"</span>) <span class="sc">+</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))<span class="sc">+</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_comp2 <span class="ot">&lt;-</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(set, <span class="fu">aes</span>(<span class="at">x =</span> obstruction, <span class="at">y =</span> int.all, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> forest.type)) <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">110</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">shape =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#2DBF81"</span>, <span class="st">"#812DBF"</span>, <span class="st">"#BF812D"</span>),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Natural forest"</span>, <span class="st">"Araucaria plantation"</span>,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Pine plantation"</span>)) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Understorey vegetation obstruction (%)"</span>, <span class="at">y =</span> <span class="st">"Community integrity (%)"</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">"c"</span>) <span class="sc">+</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="saving-the-graph" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="saving-the-graph"><span class="header-section-number">3.7</span> Saving the graph</h2>
+<section id="saving-the-graph-1" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="saving-the-graph-1"><span class="header-section-number">6.2.4</span> Saving the graph</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> plot3,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"community_integrity.png"</span>, <span class="at">dpi =</span> <span class="dv">500</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">'cm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot_comp2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="species_composition_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<p>The results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p &lt; 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. The araucaria plantation had similar bird species to the natural forest, with a small difference in community integrity (-14.14, p-adj = 0.036). On the other hand, the pine plantation had a much more different bird community from the natural forest, with a larger difference in integrity (-37.15, p-adj &lt; 0.001). Finally, there was also a significant difference in community integrity between the two plantation types, with the araucaria plantation showing higher values than the pine plantation (diff = -23.00, p-adj = 0.001).</p>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> plot_comp2,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"composition_understory.png"</span>, <span class="at">dpi =</span> <span class="dv">500</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">7</span>, <span class="at">units =</span> <span class="st">'cm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -784,13 +927,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./species_abundance.html" class="pagination-link" aria-label="Bird Species Abundance">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bird Species Abundance</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bird Species Abundance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

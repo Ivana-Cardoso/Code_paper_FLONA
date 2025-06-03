@@ -1,34 +1,52 @@
-## Bird Species Composition
+# Bird Community Integrity
 
-We assessed how similar the species composition of tree plantations was to that of natural forests using a measure called community integrity. This measure compares both the number of individuals and the types of species found in tree plantations to those in natural forests, which serve as a reference.
+Predictor variables:
 
-To find out whether the different forest types were significantly different from each other, we ran an ANOVA test. When the ANOVA showed a significant result, we used Tukey's post hoc test to see which specific types differed.
+1. **Forest type** - We performed an ANOVA test followed by a Tukey's post hoc test to identify which forest types exhibited significant differences in community integrity from each other.
 
-## Load packages
+2. **Understorey vegetation obstruction** - We performed simple linear regression analyses to investigate the effect of understorey vegetation obstruction on community integrity.
+
+### Ensuring Reproducibility {.unnumbered}
+```{r}
+set.seed(26)
+```
+
+### Load packages {.unnumbered}
 ```{r, output = FALSE}
 library(ggplot2)
 library(ggpubr)
 library(vegan)
+library(dplyr)
 ```
 
-## Importing data
+### Importing data {.unnumbered}
 ```{r, output = FALSE}
-setwd("C:/Users/ivana/OneDrive/FLONA_aves/FLONA_aves_R")
-data <- read.csv("abundance_matrix.csv")
+# https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/data")
+data <- read.csv("FLONA-PF_dataset.txt", sep = "\t")
 ```
 
-## Preparing data
+### Preparing data {.unnumbered}
 ```{r, output = FALSE}
-# Normalises the data by dividing each value by the sum of its row, converting counts to relative abundances
-rel.abund <- data[3:53]
-rel.abund <- rel.abund/rowSums(rel.abund)
+#| code-overflow: wrap
+# Renaming forest types for consistent ordering in the plot
+data$forest.type <- recode(data$forest.type,
+                           "Natural_forest" = "1.Natural_forest",
+                           "Araucaria_plantation" = "2.Araucaria_plantation",
+                           "Pine_plantation" = "3.Pine_plantation")
+
+abund <- data[,c(9:59)]
+rel.abund <- abund/rowSums(abund)
 ```
 
-## Calculating Community Integrity
+
+## Forest type
+
+### Calculating Community Integrity
 ```{r}
 #| code-overflow: wrap
 # Defines the row indices for control sites representing natural forest
-control.rows <- c(7:12)
+control.rows <- c(1:6)
 
 # Calculates the Bray–Curtis distance matrix and extracts the values among control sites (natural forest)
 bray.cf <- as.matrix(vegdist(rel.abund, method = "bray"))[control.rows, control.rows]
@@ -47,51 +65,59 @@ int.all <- ((1 - colMeans(bray.all)) / int.cf) * 100
 int.all
 ```
 
-## Calculating ANOVA
+### Calculating ANOVA
+
 ```{r}
 #| code-overflow: wrap
 # Performs a one-way ANOVA to test the effect of forest type on community integrity and checks for normality of residuals
-anova <- aov(int.all~ data$tipos_florestais)
+anova <- aov(int.all~ data$forest.type)
 summary(anova)
 
 shapiro.test(anova$residuals)
-
 ```
-The residuals of the ANOVA model are normally distributed (p > 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.
+
+The residuals of the ANOVA model are normally distributed (p \> 0.05), so it is appropriate to proceed with this test to compare species composition between forest types.
 
 ```{r}
 # Performs Tukey's HSD test to compare pairwise differences between forest types
 TukeyHSD(anova)
 ```
 
-## Plotting the graph
+The results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p \< 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. There was also a significant difference in community integrity between the two plantation types.
+
+### Plotting the graph
 ```{r, output = FALSE}
 #| code-overflow: wrap
 
-tab <- data.frame(tipos_florestais = data$tipos_florestais,
+tab <- data.frame(forest.type = data$forest.type,
                  integrity = int.all)
 
 # Creates a vector of colours, assigning one colour to each forest type (6 samples per type)
-cor <- rep(c("#912DBF","#2DBF91","#BF912D"), each = 6)
+color <- rep(c("#2DBF91", "#912DBF", "#BF912D"), each = 6)
 
-plot3 <- 
+plot_comp1  <- 
   ggplot(data = tab, 
-         aes(x = tipos_florestais, y = integrity)) +
+         aes(x = forest.type, y = integrity)) +
   
   geom_boxplot(outlier.shape = NA,
-               width = 0.7, col = "black", fill = c("#2DBF91", "#912DBF", "#BF912D"), alpha =0.3, show.legend = FALSE) +
+               width = 0.7, col = "black", 
+               fill = c("#2DBF91", "#912DBF", "#BF912D"), 
+               alpha = 0.3, show.legend = FALSE) +
   
   geom_jitter(shape= 21, 
-              width = 0.25, height = 0.3, colour = "black", fill =cor, size = 2.5) +
+              width = 0.25, height = 0.3, colour = "black", 
+              fill = color, size = 2.5) +
   
-  scale_y_continuous(limits = c(40, 103.93656),
+  scale_y_continuous(limits = c(40, 105),
                      breaks = c(40,60,80,100)) +
   
-  scale_x_discrete(labels = c("Natural\nforest", "Araucaria\nplantation", "Pine\nplantation"))+
+  scale_x_discrete(labels = c("Natural\nforest", "Araucaria\nplantation", 
+                              "Pine\nplantation"))+
   
   
   labs(x = " ", y = "Community integrity (%)", colour="black", 
        tag = "c") +
+  
   theme_pubr(base_size = 10) + 
   
   theme(axis.line = element_line(linewidth = 1/3))+
@@ -100,14 +126,76 @@ plot3 <-
   
 ```
 
-## Saving the graph
-```{r, output = FALSE}
-plot3
+### Saving the graph
+
+```{r}
+plot_comp1
 
 ggsave(
-  plot = plot3,
-  filename = "community_integrity.png", dpi = 500,
+  plot = plot_comp1,
+  filename = "composition_foresttype.png", dpi = 500,
   width = 7, height = 7, units = 'cm')
 ```
 
-The results showed that the bird communities in the understorey differed significantly between the three forest types (ANOVA: F(2,15) = 26.94, p < 0.001). Pairwise comparisons revealed that both plantation types had different bird communities compared to the natural forest. The araucaria plantation had similar bird species to the natural forest, with a small difference in community integrity (-14.14, p-adj = 0.036). On the other hand, the pine plantation had a much more different bird community from the natural forest, with a larger difference in integrity (-37.15, p-adj < 0.001). Finally, there was also a significant difference in community integrity between the two plantation types, with the araucaria plantation showing higher values than the pine plantation (diff = -23.00, p-adj = 0.001).
+
+## Understory vegetation obstruction
+
+### Preparing data
+```{r}
+#| code-overflow: wrap
+# Creates a new data frame with forest type, species composition, and understorey vegetation obstruction
+set <- data.frame(forest.type = data$forest.type,
+                  int.all = int.all,
+                  obstruction = data$obstruction)
+```
+
+
+### Fitting the regression model
+```{r}
+#| code-overflow: wrap
+# Fits a linear model to assess the effect of vegetation obstruction on species composition
+reg_int = lm(set$int.all ~ set$obstruction)
+
+# Displays a summary of the model
+summary(reg_int)
+
+# Tests the normality of model residuals
+shapiro.test(reg_int$residuals) # It is normal (p > 0.05)
+```
+
+### Plotting the graph
+```{r}
+plot_comp2 <-
+  ggplot(set, aes(x = obstruction, y = int.all, 
+                  fill = forest.type)) + 
+  
+  scale_y_continuous(limits = c(30, 110),
+                         breaks = c(40,60,80,100)) +
+  
+  geom_smooth(method = "lm", formula = y ~ x, se = TRUE, color = "black", fill = "gray") +
+  
+  geom_point(colour = "black", size = 2.5, shape = 21) +
+  
+  scale_fill_manual(values = c("#2DBF81", "#812DBF", "#BF812D"),
+                    labels = c("Natural forest", "Araucaria plantation",
+                               "Pine plantation")) +
+  
+  labs(x = "Understorey vegetation obstruction (%)", y = "Community integrity (%)",
+       tag = "c") +
+  
+  theme_pubr(base_size = 10) +
+  
+  theme(legend.position = "none") +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+          
+```
+
+### Saving the graph
+```{r}
+plot_comp2 
+ggsave(
+  plot = plot_comp2,
+  filename = "composition_understory.png", dpi = 500,
+  width = 7, height = 7, units = 'cm')
+```

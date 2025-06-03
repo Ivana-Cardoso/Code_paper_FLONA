@@ -1,9 +1,24 @@
-# Introduction {.unnumbered}
+# Introduction
 
-This is a Quarto book.
+This document covers the analyses used in the paper _Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna_, published in the journal **Forest Ecology and Management**.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+The objectives of this study were:
 
-```{r}
-1 + 1
-```
+(1) Investigate the effects of different forest types (Fig. 1) embedded within a benign environmental context - characterised by old stand age, the presence of understorey vegetation, and proximity to natural forest patches - on species richness, abundance and composition of understorey birds
+
+(2) Determine potential indicator species for each forest type.
+
+![Fig. 1 The three forest types sampled in the Floresta Nacional de Passo Fundo, southern Brazil: natural forest (Mixed Ombrophilous Forest), araucaria plantation (native species), and pine plantation (exotic species)](forest_types.png)
+
+
+This document is organised into sections, which you can navigate using the links on the left sidebar.
+
+## Data Access
+All data used in the paper and in this code are available on the KNB platform:
+[https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1](https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1)
+
+## Attribution
+If you need any clarification or are interested in the project, please contact:
+
+Ivana Cardoso (ivanawaters@gmail.com)\
+PhD student, Instituto Nacional de Pesquisas da Amazônia

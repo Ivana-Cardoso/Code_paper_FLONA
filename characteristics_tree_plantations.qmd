@@ -1,0 +1,208 @@
+# Characteristics of the tree plantations
+
+We assessed whether the native (*Araucaria angustifolia*) and exotic (*Pinus elliottii*) tree plantations differ in three aspects: age, understorey vegetation obstruction, and distance to the nearest natural forest patch larger than 10 hectares.
+
+### Ensuring reproducibility {.unnumbered}
+```{r}
+set.seed(26)
+```
+
+### Loading packages {.unnumbered}
+```{r, output = FALSE}
+library(stats)
+library(ggplot2)
+library(ggpubr)
+library(patchwork)
+library(rstatix)
+```
+
+### Importing data {.unnumbered}
+```{r}
+#| code-overflow: wrap
+
+# https://knb.ecoinformatics.org/view/doi:10.5063/F1QR4VK1
+setwd("C:/Users/ivana/OneDrive/FLONA_aves/data")
+data <- read.csv("FLONA-PF_dataset.txt", sep = "\t")
+env_all <- data[,1:8]
+env_plant <- subset(env_all, forest.type != "Natural_forest")
+```
+
+### Preparing data {.unnumbered}
+```{r}
+color <- rep(c("#912DBF","#BF912D"), each = 6)
+color_complete <-rep(c("#2DBF91","#912DBF","#BF912D"), each = 6)
+```
+
+## Age
+### Performing a t-test
+```{r}
+#| code-overflow: wrap
+# Perform the Shapiro-Wilk test to check if age data is normally distributed
+shapiro.test(env_plant$age) # It's normal (p > 0.05)
+
+# Perform Levene's test to check for homogeneity of variances across forest types
+levene_test(age ~ forest.type, data = env_plant) # The variances are homogeneous (p > 0.05)
+
+# Perform a t-test to compare age between forest types
+t.test(env_plant$age ~ env_plant$forest.type, var.equal = TRUE)
+```
+There was a significant difference in age between the two plantation types (t = 4.6696, p < 0.001).
+
+### Plotting the graph
+```{r}
+#| code-overflow: wrap
+plot_age <-
+  ggplot(data = env_plant,
+         aes(x = forest.type, y = age)) +
+  
+  scale_y_continuous(breaks = c(50, 55, 60, 65, 70, 75)) + 
+  
+  geom_boxplot(outlier.shape = NA,
+               width = 0.7, col = "black", fill = c("#912DBF","#BF912D"), 
+               alpha = 0.30, show.legend = FALSE) + 
+  
+  geom_jitter(shape= 21, 
+              width = 0.2, height = 0.2, colour = "black", 
+              fill = color, size = 2.5) + 
+  
+  scale_x_discrete(labels = c("Araucaria\nplantation",
+                              "Pine\nplantation")) +
+  
+  labs(x = " ", y = "Age in 2021 (years)", colour="black",
+       tag = "a") + 
+  
+  theme_pubr (base_size = 10) + 
+  
+  theme(axis.line = element_line(linewidth = 1/3))+
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+
+plot_age
+```
+
+## Distance to forest
+### Performing a t-test
+```{r}
+#| code-overflow: wrap
+# Perform the Shapiro-Wilk test to check if the distances to the nearest natural forest are normally distributed
+shapiro.test(env_plant$distance.forest.m) # It's normal (p > 0.05)
+
+# Perform Levene's test to check for homogeneity of variances across forest types
+levene_test(distance.forest.m ~ forest.type, data = env_plant) # The variances are homogeneous (p > 0.05)
+
+# Perform a t-test to compare the distances to the nearest natural forest between forest types
+t.test(env_plant$distance.forest.m ~ env_plant$forest.type, var.equal = TRUE)
+```
+The distance of the tree plantations to the nearest natural forest did not differ significantly between the two types of plantation (t = -0.121; p = 0.906). 
+
+### Plotting the graph
+```{r}
+#| code-overflow: wrap
+plot_dist <- 
+  
+  ggplot(data = env_plant,
+         aes(x = forest.type, y = distance.forest.m)) +
+  
+  geom_boxplot(outlier.shape = NA,
+               width = 0.7, col = "black", 
+               fill = c("#912DBF", "#BF912D"),
+               alpha = 0.30, show.legend = FALSE) +
+  
+  geom_jitter(shape= 21, width = 0.2,
+              height = 0.2, colour = "black", 
+              fill = color, size = 2.5) +
+  
+  scale_x_discrete(labels = c("Araucaria\nplantation",
+                              "Pine\nplantation")) +
+  
+  scale_y_continuous(breaks = c(200, 600, 1000, 1400, 1800)) +
+  
+  labs(x = " ", 
+       y = "Distance to natural forest (m)", 
+       colour="black",
+       tag = "b") +
+  
+  theme_pubr (base_size = 10) + 
+  
+  theme(axis.line = element_line(linewidth = 1/3)) +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+
+plot_dist
+```
+
+## Understory vegetation obstruction
+### Fitting an ANOVA model
+```{r}
+#| code-overflow: wrap
+# Perform the Shapiro-Wilk test to check if understorey vegetation obstruction is normally distributed
+shapiro.test(env_all$obstruction) # It's normal (p > 0.05)
+
+# Perform Levene's test to check for homogeneity of variances across forest types
+levene_test(obstruction ~ as.factor(forest.type), data = env_all) # The variances are homogeneous (p > 0.05)
+
+# Perform one-way ANOVA to test for differences in understorey vegetation obstruction between forest types
+anova <- aov(obstruction ~ forest.type, data = env_all)
+summary(anova)
+
+# Perform the Shapiro-Wilk test on the residuals to check if they are normally distributed
+shapiro.test(anova$residuals) # Residuals of the ANOVA model are normal (p > 0.05)
+
+# Perform Levene's test on residuals to check for homogeneity of variances
+levene_test(anova$residuals ~ as.factor(forest.type), data = env_all) # The variances are homogeneous (p > 0.05)
+
+# Perform Tukey's HSD post-hoc test to compare pairwise differences between forest types
+par_par <- TukeyHSD(anova)
+par_par
+```
+
+Understorey vegetation obstruction significantly differed between forest types (F = 5.986, p = 0.01). We found significant differences between pine plantations and natural forests (diff = -13.50, p = 0.015) and between pine plantations and araucaria plantations (diff = -11.33, p = 0.041). No significant difference was found between araucaria plantations and natural forests (diff = 2.16, p = 0.864).
+
+### Plotting the graph
+```{r}
+#| code-overflow: wrap
+# Renaming forest types for consistent ordering in the plot
+env_all$forest.type[env_all$forest.type == "Natural_forest"] <- "1.Natural_forest"
+
+env_all$forest.type[env_all$forest.type == "Araucaria_plantation"] <- "2.Araucaria_plantation"
+
+env_all$forest.type[env_all$forest.type == "Pine_plantation"] <- "3.Pine_plantation"
+
+plot_obs <- 
+  ggplot(data = env_all,
+         aes(x = forest.type, y = obstruction)) +
+  
+  geom_boxplot(outlier.shape = NA,
+               width = 0.7, col = "black", 
+               fill = c("#2DBF91", "#912DBF", "#BF912D"), 
+               alpha = 0.30, show.legend = FALSE) +
+  
+  geom_jitter(shape= 21, 
+              width = 0.2, height = 0.2, colour = "black", 
+              fill = color_complete, size = 2.5) +
+  
+  scale_x_discrete(labels = c("Natural \nforest",
+                              "Araucaria\nplantation",
+                              "Pine\nplantation")) +
+  
+  labs(x = " ", y = "Understorey obstruction (%)", colour="black",
+       tag = "c") + 
+  
+  theme_pubr (base_size = 10) + 
+  
+  theme(axis.line = element_line(linewidth = 1/3)) +
+  
+  theme(plot.tag = element_text(size = 16, face = "bold"))
+
+plot_obs
+
+```
+
+### Saving the graph
+```{r}
+#| code-overflow: wrap
+ggsave(
+  plot = plot_age + plot_dist + plot_obs,
+  filename = "charact_plantation.png", dpi = 500,
+  width = 7 * 3, height = 7, units = 'cm')
+```
