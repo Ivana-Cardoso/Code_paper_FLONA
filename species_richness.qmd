@@ -59,7 +59,7 @@ raref = as.data.frame(t(raref))
 ```{r, output = FALSE}
 #| code-overflow: wrap
 # Estimates rarefaction and extrapolation curves of species richness (q = 0) based on abundance data
-raref <- iNEXT(raref, q= 0, datatype ="abundance", endpoint = NULL, conf = 0.95, nboot = 10)
+raref <- iNEXT(raref, q= 0, datatype ="abundance", endpoint = NULL, conf = 0.95, nboot = 1000)
 ```
 
 ### Plotting the graph

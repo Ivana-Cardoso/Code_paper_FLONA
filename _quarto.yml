@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "Tree plantations inserted in a benign environmental context can contribute to the maintenance of forest avifauna"
